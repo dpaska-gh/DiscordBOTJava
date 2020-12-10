@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import discord.bot.Main;
+import discord.bot.commands.finals.FinalValues;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,7 +15,11 @@ import java.net.URLConnection;
 public class CatImage {
     public static void getCatImg() {
         Main.api.addMessageCreateListener(event -> {
-            if (event.getMessageContent().equalsIgnoreCase("!pus")) {
+            if (event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catImageAlias.cati)
+                    || event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catImageAlias.catimage)
+                    || event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catImageAlias.pus)
+                    || event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catImageAlias.kitty)
+                    || event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catImageAlias.mujcek)) {
                 try {
                     URL loginurl = new URL("https://api.thecatapi.com/v1/images/search");
                     URLConnection yc = loginurl.openConnection();

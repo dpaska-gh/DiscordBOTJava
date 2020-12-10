@@ -2,8 +2,10 @@ package discord.bot;
 
 import discord.bot.commands.*;
 
+import java.io.IOException;
+
 public class UnifiedCommandClass {
-    public static void commandStartup(){
+    public static void commandStartup() throws IOException {
         AtMentionCommand.onMessageCreate();
         CatFactCommand.getCatFact();
         CatImage.getCatImg();
@@ -14,5 +16,7 @@ public class UnifiedCommandClass {
         TempChannel.createTempChannel();
         TrumpQuoteCommand.trumpQuoteCommand();
         SilenceCommand.silenceCommand();
+        TftCommand.getTft();
+        RiotStats.getStats();
     }
 }

@@ -6,23 +6,25 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import discord.bot.ApiKey;
 import discord.bot.Main;
+import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.event.message.MessageCreateEvent;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Objects;
 
 public class TftCommand {
 
 
-    public void getTft() throws IOException {
+    public static void getTft() throws IOException {
 
         Main.api.addMessageCreateListener(event -> {
             String message = event.getMessageContent();
             String name = message;
             String[] split = message.split(" ");
-            if (split[0].equalsIgnoreCase("!tft")) {
+            if (split[0].equalsIgnoreCase(FinalValues.prefix + FinalValues.tftCommand)) {
                 if (split[1].equalsIgnoreCase("gentlmens"))
                     getGentlemens(event);
                 else
@@ -31,7 +33,7 @@ public class TftCommand {
         });
     }
 
-    public void getGentlemens(MessageCreateEvent event) {
+    public static void getGentlemens(MessageCreateEvent event) {
         Thread newThread = new Thread(() -> {
             printData(event, "LukaLegend007");
             event.getChannel().sendMessage("--------------------------------");
@@ -56,7 +58,7 @@ public class TftCommand {
     }
 
 
-    private void printData(MessageCreateEvent event, String s) {
+    private static void printData(MessageCreateEvent event, String s) {
         try {
             if (s.split(" ").length > 1) {
                 System.out.println(s.length());

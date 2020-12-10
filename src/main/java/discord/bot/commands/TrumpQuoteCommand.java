@@ -1,7 +1,8 @@
 package discord.bot.commands;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import discord.bot.Main.*;
+import discord.bot.commands.finals.FinalValues;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -13,7 +14,7 @@ import static discord.bot.Main.api;
 public class TrumpQuoteCommand {
     public static void trumpQuoteCommand(){
         api.addMessageCreateListener(event -> {
-            if (event.getMessageContent().equalsIgnoreCase("!trump")) {
+            if (event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.trumpCommand)) {
                 try {
                     URL loginUrl = new URL("https://api.tronalddump.io/random/quote");
                     URLConnection yc = loginUrl.openConnection();

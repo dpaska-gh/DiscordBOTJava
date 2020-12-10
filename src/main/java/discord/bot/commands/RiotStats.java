@@ -9,16 +9,17 @@ import com.merakianalytics.orianna.types.core.staticdata.Champions;
 import com.merakianalytics.orianna.types.core.summoner.Summoner;
 import discord.bot.ApiKey;
 import discord.bot.Main;
+import discord.bot.commands.finals.FinalValues;
 
 public class RiotStats {
 
-    public void getStats() {
+    public static void getStats() {
         Main.api.addMessageCreateListener(event -> {
 
             String messageContent = event.getMessageContent();
             String[] split = messageContent.split(" ");
 
-            if (split[0].equalsIgnoreCase("!riot")) {
+            if (split[0].equalsIgnoreCase(FinalValues.prefix + FinalValues.riotStats)) {
                 Orianna.setRiotAPIKey(ApiKey.riotApiKey);
                 Orianna.setDefaultRegion(Region.EUROPE_NORTH_EAST);
                 Summoner summoner = Orianna.summonerNamed(split[1]).get();

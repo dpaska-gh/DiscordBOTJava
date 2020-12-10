@@ -1,12 +1,14 @@
 package discord.bot.commands;
 
-import static discord.bot.Main.*;
+import discord.bot.commands.finals.FinalValues;
+
+import static discord.bot.Main.api;
 
 public class PongCommand {
 
     public static void pongCommand() {
         api.addMessageCreateListener(event -> {
-            if (event.getMessageContent().equalsIgnoreCase("!ping")) {
+            if (event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.pingCommand)) {
                 event.getChannel().sendMessage("Pong!");
             }
         });
