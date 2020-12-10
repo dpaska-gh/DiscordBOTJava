@@ -1,8 +1,12 @@
+package discord.bot;
+
+import discord.bot.commands.PongCommand;
+import discord.bot.commands.CatFactCommand;
+import discord.bot.commands.CatImage;
+import discord.bot.commands.JoinBotCommand;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.intent.Intent;
-
-import java.util.concurrent.TimeUnit;
 
 public class Main {
     public static final String token = "Nzc0NDA4OTI1MDkyNTExNzQ1.X6XWgw.dd9EiC578b8R6Vxhj-Qi56J-x4I";
@@ -12,13 +16,13 @@ public class Main {
     public static void main(String[] args) {
         PongCommand pong = new PongCommand();
         pong.pongCommand();
-        catFactCommand cat = new catFactCommand();
+        CatFactCommand cat = new CatFactCommand();
         cat.getCatFact();
-        catImage catimg = new catImage();
+        CatImage catimg = new CatImage();
         catimg.getCatImg();
-        //mimiEasterEgg ee = new mimiEasterEgg();
-        //ee.mimiEasterEgg();
-        joinCommand join = new joinCommand();
+        //discord.bot.mimiEasterEgg ee = new discord.bot.mimiEasterEgg();
+        //ee.discord.bot.mimiEasterEgg();
+        JoinBotCommand join = new JoinBotCommand();
         join.joinChannel();
     }
 
