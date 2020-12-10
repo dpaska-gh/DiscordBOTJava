@@ -1,12 +1,12 @@
 package discord.bot.commands;
 
-import discord.bot.Main;
+import static discord.bot.Main.*;
 
-public class PongCommand extends Main {
+public class PongCommand {
 
-    public void pongCommand(){
+    public void pongCommand() {
         api.addMessageCreateListener(event -> {
-            if(event.getMessageContent().equalsIgnoreCase("!ping")) {
+            if (event.getMessageContent().equalsIgnoreCase("!ping")) {
                 event.getChannel().sendMessage("Pong!");
             }
         });

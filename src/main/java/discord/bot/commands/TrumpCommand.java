@@ -11,10 +11,11 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class CatImage {
-    public void getCatImg() {
+public class TrumpCommand {
+
+    public void getTrumpImage() {
         Main.api.addMessageCreateListener(event -> {
-            if (event.getMessageContent().equalsIgnoreCase("!pus")) {
+            if (event.getMessageContent().equalsIgnoreCase("!trump")) {
                 try {
                     URL loginurl = new URL("https://api.thecatapi.com/v1/images/search");
                     URLConnection yc = loginurl.openConnection();
@@ -34,6 +35,7 @@ public class CatImage {
                 }
             }
         });
+
 
     }
 }
