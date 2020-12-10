@@ -30,6 +30,12 @@ public class Main {
         //ee.discord.bot.mimiEasterEgg();
         JoinBotCommand join = new JoinBotCommand();
         join.joinChannel();
+
+        RadnomMeme radnomMeme = new RadnomMeme();
+        radnomMeme.randomMeme();
+
+        TrumpQuoteCommand trumpQuoteCommand = new TrumpQuoteCommand();
+        trumpQuoteCommand.trumpQuoteCommand();
     }
 
 }
