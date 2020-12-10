@@ -2,14 +2,15 @@ package discord.bot.commands;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import discord.bot.Main;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class CatFactCommand extends Main {
+import static discord.bot.Main.*;
+
+public class CatFactCommand {
 
     public void getCatFact() {
         api.addMessageCreateListener(event -> {
