@@ -23,8 +23,8 @@ public class CatImage {
                             new InputStreamReader(
                                     yc.getInputStream()));
                     String inputLine = in.readLine();
-                    JsonParser parser = new JsonParser();
-                    JsonArray array = parser.parse(inputLine).getAsJsonArray();
+
+                    JsonArray array = JsonParser.parseString(inputLine).getAsJsonArray();
                     JsonElement test1 = array.get(0);
                     JsonObject test2 = test1.getAsJsonObject();
                     event.getChannel().sendMessage(test2.get("url").getAsString());
