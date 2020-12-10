@@ -20,12 +20,13 @@ import java.awt.*;
 
 public class JoinBotCommand extends Main {
 
-    public void joinChannel() {
+    public static void joinChannel() {
         api.addMessageCreateListener(event -> {
+            Server server = event.getServer().get();
+
             if (event.getMessage().getContent().equalsIgnoreCase("krava mi je vusla")) {
                 ServerVoiceChannel channel;
-                Server server = api.getServerById("774334763653136384").get();
-                //channel = api.getServerVoiceChannelById("774367293492822056").get();
+
                 channel = event.getMessage().getAuthor().asUser().get().getConnectedVoiceChannel(server).get();
                 System.out.println(channel.getName());
 
@@ -70,9 +71,10 @@ public class JoinBotCommand extends Main {
                         .setColor(Color.BLUE);
                 event.getChannel().sendMessage(embed);
             }
+
             if (event.getMessage().getContent().equalsIgnoreCase("odjebi")) {
                 event.getChannel().sendMessage("Odjebi ti.");
-
+                server.getAudioConnection().get().close();
 
             }
 
