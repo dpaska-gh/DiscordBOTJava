@@ -15,27 +15,25 @@ import java.net.URLConnection;
 public class CatImage {
     public static void getCatImg() {
         Main.api.addMessageCreateListener(event -> {
-            if (event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catImageAlias.cati)
-                    || event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catImageAlias.catimage)
-                    || event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catImageAlias.pus)
-                    || event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catImageAlias.kitty)
-                    || event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catImageAlias.mujcek)) {
-                try {
-                    URL loginurl = new URL("https://api.thecatapi.com/v1/images/search");
-                    URLConnection yc = loginurl.openConnection();
-                    yc.setConnectTimeout(10 * 1000);
-                    BufferedReader in = new BufferedReader(
-                            new InputStreamReader(
-                                    yc.getInputStream()));
-                    String inputLine = in.readLine();
+            for (FinalValues.catImageAlias alias : FinalValues.catImageAlias.values()) {
+                if (event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + alias)) {
+                    try {
+                        URL loginurl = new URL("https://api.thecatapi.com/v1/images/search");
+                        URLConnection yc = loginurl.openConnection();
+                        yc.setConnectTimeout(10 * 1000);
+                        BufferedReader in = new BufferedReader(
+                                new InputStreamReader(
+                                        yc.getInputStream()));
+                        String inputLine = in.readLine();
 
-                    JsonArray array = JsonParser.parseString(inputLine).getAsJsonArray();
-                    JsonElement test1 = array.get(0);
-                    JsonObject test2 = test1.getAsJsonObject();
-                    event.getChannel().sendMessage(test2.get("url").getAsString());
-                    event.addReactionsToMessage("❤️");
-                } catch (Exception e) {
-                    System.out.println(e);
+                        JsonArray array = JsonParser.parseString(inputLine).getAsJsonArray();
+                        JsonElement test1 = array.get(0);
+                        JsonObject test2 = test1.getAsJsonObject();
+                        event.getChannel().sendMessage(test2.get("url").getAsString());
+                        event.addReactionsToMessage("❤️");
+                    } catch (Exception e) {
+                        System.out.println(e);
+                    }
                 }
             }
         });

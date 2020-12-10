@@ -11,26 +11,24 @@ import java.util.Collection;
 public class SilenceCommand {
     public static void silenceCommand() {
         Main.api.addMessageCreateListener(event -> {
-            if (event.getMessage().getContent().contains(FinalValues.prefix + FinalValues.silenceCommandAlias.tisina)
-                    || event.getMessage().getContent().contains(FinalValues.prefix + FinalValues.silenceCommandAlias.psst)
-                    || event.getMessage().getContent().contains(FinalValues.prefix + FinalValues.silenceCommandAlias.silence)) {
+            for (FinalValues.silenceCommandAlias alias : FinalValues.silenceCommandAlias.values()) {
+                if (event.getMessageContent().contains(FinalValues.prefix + alias)) {
+                    String messageContent = event.getMessageContent();
+                    Server server = event.getServer().get();
+                    String[] split = messageContent.split(" ");
+                    ServerVoiceChannel voiceChannel = event.getMessageAuthor().getConnectedVoiceChannel().get();
+                    Collection<User> userCollection = voiceChannel.getConnectedUsers();
 
-                String messageContent = event.getMessageContent();
-                Server server = event.getServer().get();
-                String[] split = messageContent.split(" ");
-                ServerVoiceChannel voiceChannel = event.getMessageAuthor().getConnectedVoiceChannel().get();
-                Collection<User> userCollection = voiceChannel.getConnectedUsers();
-
-                if (split[0].equalsIgnoreCase(FinalValues.prefix + FinalValues.silenceCommandAlias.tisina)
-                        || split[0].equalsIgnoreCase(FinalValues.prefix + FinalValues.silenceCommandAlias.psst)
-                        || split[0].equalsIgnoreCase(FinalValues.prefix + FinalValues.silenceCommandAlias.silence)) {
-                    userCollection.forEach(users -> {
-                        if (users.getName().toUpperCase().contains(split[1].toUpperCase())) {
-                            users.mute(server);
-                        }
-                    });
+                    if (split[0].equalsIgnoreCase(FinalValues.prefix + alias)) {
+                        userCollection.forEach(users -> {
+                            if (users.getName().toUpperCase().contains(split[1].toUpperCase())) {
+                                users.mute(server);
+                            }
+                        });
+                    }
                 }
             }
+
         });
     }
 }

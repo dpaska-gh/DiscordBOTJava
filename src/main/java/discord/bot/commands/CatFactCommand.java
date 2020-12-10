@@ -15,23 +15,24 @@ public class CatFactCommand {
 
     public static void getCatFact() {
         api.addMessageCreateListener(event -> {
-            if (event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catFactAlias.catf)
-                    || event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catFactAlias.kittyf)
-                    || event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catFactAlias.mujcekfakt)
-                    || event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.catFactAlias.pusf)) {
-                try {
-                    URL loginUrl = new URL("https://catfact.ninja/fact");
-                    URLConnection yc = loginUrl.openConnection();
-                    yc.setConnectTimeout(10 * 1000);
-                    BufferedReader in = new BufferedReader(
-                            new InputStreamReader(
-                                    yc.getInputStream()));
-                    String inputLine = in.readLine();
+            for (FinalValues.catFactAlias alias : FinalValues.catFactAlias.values()) {
+                if (event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + alias)) {
+                    {
+                        try {
+                            URL loginUrl = new URL("https://catfact.ninja/fact");
+                            URLConnection yc = loginUrl.openConnection();
+                            yc.setConnectTimeout(10 * 1000);
+                            BufferedReader in = new BufferedReader(
+                                    new InputStreamReader(
+                                            yc.getInputStream()));
+                            String inputLine = in.readLine();
 
-                    JsonObject array = JsonParser.parseString(inputLine).getAsJsonObject();
-                    event.getChannel().sendMessage(array.get("fact").getAsString());
-                } catch (Exception e) {
-                    System.out.println(e);
+                            JsonObject array = JsonParser.parseString(inputLine).getAsJsonObject();
+                            event.getChannel().sendMessage(array.get("fact").getAsString());
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+                    }
                 }
             }
         });

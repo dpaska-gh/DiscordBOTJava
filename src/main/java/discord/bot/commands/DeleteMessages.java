@@ -19,16 +19,12 @@ public class DeleteMessages {
 
             TextChannel channel = event.getChannel();
 
-
-            if (split[0].equalsIgnoreCase(FinalValues.prefix + FinalValues.deleteMessagesAlias.deletemessages)
-                    || split[0].equalsIgnoreCase(FinalValues.prefix + FinalValues.deleteMessagesAlias.izbrisi)
-                    || split[0].equalsIgnoreCase(FinalValues.prefix + FinalValues.deleteMessagesAlias.nestanicrnazvijeri)
-                    || split[0].equalsIgnoreCase(FinalValues.prefix + FinalValues.deleteMessagesAlias.delete)) {
-
-                MessageSet messageSet = channel.getMessagesBefore(Integer.parseInt(split[1]), message).join();
-                Message.delete(Main.api, messageSet);
-                Message.delete(Main.api, message);
-
+            for (FinalValues.deleteMessagesAlias alias : FinalValues.deleteMessagesAlias.values()) {
+                if (split[0].equalsIgnoreCase(FinalValues.prefix + alias)) {
+                    MessageSet messageSet = channel.getMessagesBefore(Integer.parseInt(split[1]), message).join();
+                    Message.delete(Main.api, messageSet);
+                    Message.delete(Main.api, message);
+                }
             }
 
         });
