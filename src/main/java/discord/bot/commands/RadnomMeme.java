@@ -12,7 +12,7 @@ import java.net.URLConnection;
 
 public class RadnomMeme {
 
-   public void  randomMeme() {
+   public static void randomMeme() {
 
        Main.api.addMessageCreateListener(event -> {
            if (event.getMessageContent().equalsIgnoreCase("!meme")) {

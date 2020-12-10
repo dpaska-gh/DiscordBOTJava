@@ -12,7 +12,7 @@ import static discord.bot.Main.*;
 
 public class CatFactCommand {
 
-    public void getCatFact() {
+    public static void getCatFact() {
         api.addMessageCreateListener(event -> {
             if (event.getMessageContent().equalsIgnoreCase("!catfact")) {
                 try {

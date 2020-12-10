@@ -7,7 +7,7 @@ import org.javacord.api.entity.message.MessageSet;
 
 public class DeleteMessages {
 
-    public void deleteMessages() {
+    public static void deleteMessages() {
 
         Main.api.addMessageCreateListener(event -> {
 

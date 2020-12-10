@@ -9,7 +9,7 @@ import java.util.List;
 public class AtMentionCommand {
 
 
-    public void onMessageCreate() {
+    public static void onMessageCreate() {
 
         Main.api.addMessageCreateListener(event -> {
             Message message = event.getMessage();

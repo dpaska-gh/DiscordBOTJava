@@ -11,7 +11,7 @@ import java.net.URLConnection;
 import static discord.bot.Main.api;
 
 public class TrumpQuoteCommand {
-    public void trumpQuoteCommand(){
+    public static void trumpQuoteCommand(){
         api.addMessageCreateListener(event -> {
             if (event.getMessageContent().equalsIgnoreCase("!trump")) {
                 try {

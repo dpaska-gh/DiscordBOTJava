@@ -12,7 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class CatImage {
-    public void getCatImg() {
+    public static void getCatImg() {
         Main.api.addMessageCreateListener(event -> {
             if (event.getMessageContent().equalsIgnoreCase("!pus")) {
                 try {

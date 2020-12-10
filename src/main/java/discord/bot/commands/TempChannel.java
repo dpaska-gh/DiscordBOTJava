@@ -12,7 +12,7 @@ import static discord.bot.Main.*;
 
 public class TempChannel {
 
-    public void createTempChannel() {
+    public static void createTempChannel() {
 
         Main.api.addMessageCreateListener(eventListener -> {
             if (eventListener.getMessageContent().equalsIgnoreCase("!temp")) {
