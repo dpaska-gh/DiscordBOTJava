@@ -11,7 +11,7 @@ import java.net.URLConnection;
 public class catImage extends Main{
     public void getCatImg() {
         Main.api.addMessageCreateListener(event -> {
-            if(event.getMessageContent().equalsIgnoreCase("!cat")) {
+            if(event.getMessageContent().equalsIgnoreCase("!pus")) {
                 try {
                     URL loginurl = new URL("https://api.thecatapi.com/v1/images/search");
                     URLConnection yc = loginurl.openConnection();
