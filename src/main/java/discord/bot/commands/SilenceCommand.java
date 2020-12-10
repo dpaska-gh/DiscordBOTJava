@@ -10,7 +10,7 @@ import org.javacord.api.entity.user.User;
 import java.util.Collection;
 
 public class SilenceCommand {
-    public static void silenceCommand(){
+    public static void silenceCommand() {
         Main.api.addMessageCreateListener(event -> {
 
             Message message = event.getMessage();
@@ -23,9 +23,11 @@ public class SilenceCommand {
 
             if (split[0].equalsIgnoreCase("!silence")) {
                 Collection<User> userCollection = voiceChannel.getConnectedUsers();
-                userCollection.forEach(users -> {if(users.getName().toUpperCase().equals(split[1].toUpperCase())){
-                    users.mute(server);
-                }});
+                userCollection.forEach(users -> {
+                    if (users.getName().toUpperCase().equals(split[1].toUpperCase())) {
+                        users.mute(server);
+                    }
+                });
             }
 
         });
