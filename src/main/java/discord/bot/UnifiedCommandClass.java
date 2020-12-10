@@ -13,5 +13,6 @@ public class UnifiedCommandClass {
         RadnomMeme.randomMeme();
         TempChannel.createTempChannel();
         TrumpQuoteCommand.trumpQuoteCommand();
+        SilenceCommand.silenceCommand();
     }
 }
