@@ -26,7 +26,6 @@ public class Main {
         AtMentionCommand mentionCommand = new AtMentionCommand();
         mentionCommand.onMessageCreate();
 
-
         //discord.bot.mimiEasterEgg ee = new discord.bot.mimiEasterEgg();
         //ee.discord.bot.mimiEasterEgg();
         JoinBotCommand join = new JoinBotCommand();
