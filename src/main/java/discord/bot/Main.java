@@ -28,6 +28,8 @@ public class Main {
         commands.put("!temp", new TempChannel());
         commands.put("!tft", new TftCommand());
         commands.put("!trump", new TrumpQuoteCommand());
+        commands.put("!play", new JoinBotCommand());
+        commands.put("!odjebi", new DisconnectCommand());
     }
 
     public static SortedMap<String, TemplateCommand> commands() {
@@ -35,7 +37,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        JoinBotCommand.joinChannel();
+
         api.addMessageCreateListener(event -> {
 
             try {

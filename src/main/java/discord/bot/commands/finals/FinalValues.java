@@ -25,5 +25,9 @@ public class FinalValues {
 
     public static final String HELPCOMMAND = "help";
 
+    public static final String PLAY = "play";
+
+    public static final String ODJEBI = "odjebi";
+
 
 }

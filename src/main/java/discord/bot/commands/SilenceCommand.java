@@ -26,6 +26,10 @@ public class SilenceCommand implements TemplateCommand {
                 userCollection.forEach(users -> {
                     if (users.getName().toUpperCase().contains(split[1].toUpperCase())) {
                         users.mute(server);
+
+                        if (users.isMuted(server)) {
+                            users.unmute(server);
+                        }
                     }
                 });
             }
