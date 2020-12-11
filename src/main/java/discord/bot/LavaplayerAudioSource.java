@@ -11,14 +11,14 @@ public class LavaplayerAudioSource extends AudioSourceBase {
     private final AudioPlayer audioPlayer;
     private AudioFrame lastFrame;
 
-    public LavaplayerAudioSource(DiscordApi api, AudioPlayer audioPlayer){
+    public LavaplayerAudioSource(DiscordApi api, AudioPlayer audioPlayer) {
         super(api);
         this.audioPlayer = audioPlayer;
     }
 
     @Override
-    public byte[] getNextFrame(){
-        if(lastFrame == null){
+    public byte[] getNextFrame() {
+        if (lastFrame == null) {
             return null;
         }
         return applyTransformers(lastFrame.getData());

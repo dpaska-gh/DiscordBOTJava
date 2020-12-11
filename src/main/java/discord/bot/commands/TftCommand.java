@@ -5,7 +5,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import discord.bot.ApiKey;
-import discord.bot.Main;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.event.message.MessageCreateEvent;
 
@@ -14,47 +13,39 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Collections;
+import java.util.List;
 
-public class TftCommand {
+public class TftCommand implements TemplateCommand {
 
+    @Override
+    public void executeCommand(MessageCreateEvent event) {
+        String message = event.getMessageContent();
+        String name = message;
+        String[] split = message.split(" ");
+        if (split[0].equalsIgnoreCase(FinalValues.PREFIX + FinalValues.TFTCOMMAND)) {
+            if (split[1].equalsIgnoreCase("gentlmens"))
+                getGentlemens(event);
+            else
+                printData(event, name.replace("!tft ", "").trim());
+        }
+    }
 
-    public static void getTft() throws IOException {
+    @Override
+    public String getCommandName() {
+        return FinalValues.TFTCOMMAND;
+    }
 
-        Main.api.addMessageCreateListener(event -> {
-            String message = event.getMessageContent();
-            String name = message;
-            String[] split = message.split(" ");
-            if (split[0].equalsIgnoreCase(FinalValues.prefix + FinalValues.tftCommand)) {
-                if (split[1].equalsIgnoreCase("gentlmens"))
-                    getGentlemens(event);
-                else
-                    printData(event, name.replace("!tft ", "").trim());
-            }
-        });
+    @Override
+    public List<String> getCommandDescription() {
+        return Collections.singletonList("Gets the TFT stats for user.");
     }
 
     public static void getGentlemens(MessageCreateEvent event) {
-        Thread newThread = new Thread(() -> {
-            printData(event, "LukaLegend007");
-            event.getChannel().sendMessage("--------------------------------");
-        });
-        newThread.start();
-        Thread newThread2 = new Thread(() -> {
-
-            printData(event, "MiqeloS");
-            event.getChannel().sendMessage("--------------------------------");
-        });
-        newThread2.start();
-        Thread newThread3 = new Thread(() -> {
-            printData(event, "BogTFTa");
-            event.getChannel().sendMessage("--------------------------------");
-        });
-        newThread3.start();
-        Thread newThread4 = new Thread(() -> {
-            printData(event, "sar der rot");
-        });
-        newThread4.start();
-
+        printData(event, "LukaLegend007");
+        printData(event, "MiqeloS");
+        printData(event, "BogTFTa");
+        printData(event, "sar der rot");
     }
 
 
@@ -84,17 +75,14 @@ public class TftCommand {
             JsonElement winsElement = array.get(0);
             JsonObject wins = winsElement.getAsJsonObject();
 
-            event.getChannel().sendMessage(wins.get("summonerName").getAsString());
-            event.getChannel().sendMessage
-                    (wins.get("tier").getAsString() + "   " + wins.get("rank").getAsString() + "   " + wins.get("leaguePoints").getAsString() + "lp");
-            event.getChannel().sendMessage
-                    (wins.get("wins").getAsString() + " wins " +
-                            Float.parseFloat(wins.get("wins").getAsString()) * 100 / (Float.parseFloat(wins.get("losses").getAsString()) + Float.parseFloat(wins.get("wins").getAsString())) + "% winrate");
-
+            String sb = wins.get("summonerName").getAsString() + "\n" +
+                    wins.get("tier").getAsString() + "   " + wins.get("rank").getAsString() + "   " + wins.get("leaguePoints").getAsString() + "lp\n" +
+                    wins.get("wins").getAsString() + " wins " +
+                    Float.parseFloat(wins.get("wins").getAsString()) * 100 / (Float.parseFloat(wins.get("losses").getAsString()) + Float.parseFloat(wins.get("wins").getAsString())) + "% winrate\n";
+            event.getChannel().sendMessage(sb);
         } catch (IOException e) {
             event.getChannel().sendMessage("Player not found");
         }
     }
-
 
 }

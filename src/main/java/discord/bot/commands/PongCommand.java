@@ -1,16 +1,28 @@
 package discord.bot.commands;
 
 import discord.bot.commands.finals.FinalValues;
+import org.javacord.api.event.message.MessageCreateEvent;
 
-import static discord.bot.Main.api;
+import java.util.Collections;
+import java.util.List;
 
-public class PongCommand {
+public class PongCommand implements TemplateCommand {
 
-    public static void pongCommand() {
-        api.addMessageCreateListener(event -> {
-            if (event.getMessageContent().equalsIgnoreCase(FinalValues.prefix + FinalValues.pingCommand)) {
-                event.getChannel().sendMessage("Pong!");
-            }
-        });
+
+    @Override
+    public void executeCommand(MessageCreateEvent event) {
+        if (event.getMessageContent().equalsIgnoreCase(FinalValues.PREFIX + FinalValues.PINGCOMMAND)) {
+            event.getChannel().sendMessage("Pong!");
+        }
+    }
+
+    @Override
+    public String getCommandName() {
+        return FinalValues.PINGCOMMAND;
+    }
+
+    @Override
+    public List<String> getCommandDescription() {
+        return Collections.singletonList("Ping-pong!");
     }
 }

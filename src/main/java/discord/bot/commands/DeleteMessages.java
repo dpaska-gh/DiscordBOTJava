@@ -5,28 +5,37 @@ import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageSet;
+import org.javacord.api.event.message.MessageCreateEvent;
 
-public class DeleteMessages {
+import java.util.Collections;
+import java.util.List;
 
-    public static void deleteMessages() {
+public class DeleteMessages implements TemplateCommand {
 
-        Main.api.addMessageCreateListener(event -> {
+    @Override
+    public void executeCommand(MessageCreateEvent event) {
 
+        Message message = event.getMessage();
+        String messageContent = event.getMessageContent();
+        String[] split = messageContent.split(" ");
 
-            Message message = event.getMessage();
-            String messageContent = event.getMessageContent();
-            String[] split = messageContent.split(" ");
+        TextChannel channel = event.getChannel();
 
-            TextChannel channel = event.getChannel();
+        if (split[0].equalsIgnoreCase(FinalValues.PREFIX + FinalValues.DELETE)) {
+            MessageSet messageSet = channel.getMessagesBefore(Integer.parseInt(split[1]), message).join();
+            Message.delete(Main.api, messageSet);
+            Message.delete(Main.api, message);
+        }
 
-            for (FinalValues.deleteMessagesAlias alias : FinalValues.deleteMessagesAlias.values()) {
-                if (split[0].equalsIgnoreCase(FinalValues.prefix + alias)) {
-                    MessageSet messageSet = channel.getMessagesBefore(Integer.parseInt(split[1]), message).join();
-                    Message.delete(Main.api, messageSet);
-                    Message.delete(Main.api, message);
-                }
-            }
+    }
 
-        });
+    @Override
+    public String getCommandName() {
+        return FinalValues.DELETE;
+    }
+
+    @Override
+    public List<String> getCommandDescription() {
+        return Collections.singletonList("Deletes the given number of messages");
     }
 }

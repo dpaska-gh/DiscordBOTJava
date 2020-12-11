@@ -60,7 +60,7 @@ public class JoinBotCommand extends Main {
                         }
                     });
                 }).exceptionally(e -> {
-                    // Failed to connect to voice channel (no permissions?)
+
                     e.printStackTrace();
                     return null;
                 });

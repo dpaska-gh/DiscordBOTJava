@@ -1,23 +1,34 @@
 package discord.bot.commands;
 
-import discord.bot.Main;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.user.User;
+import org.javacord.api.event.message.MessageCreateEvent;
 
+import java.util.Collections;
 import java.util.List;
 
-public class AtMentionCommand {
+public class AtMentionCommand implements TemplateCommand {
 
 
-    public static void onMessageCreate() {
+    @Override
+    public void executeCommand(MessageCreateEvent event) {
 
-        Main.api.addMessageCreateListener(event -> {
-            Message message = event.getMessage();
-            List<User> users = message.getMentionedUsers();
+        Message mess = event.getMessage();
+        List<User> users = mess.getMentionedUsers();
 
-            if (!users.isEmpty()) {
-                event.getChannel().sendMessage("koje vej");
-            }
-        });
+        if (!users.isEmpty()) {
+            event.getChannel().sendMessage("koje vej");
+        }
+
+    }
+
+    @Override
+    public String getCommandName() {
+        return "mention";
+    }
+
+    @Override
+    public List<String> getCommandDescription() {
+        return Collections.singletonList("Command replys on person mention.");
     }
 }

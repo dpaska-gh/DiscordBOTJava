@@ -1,47 +1,29 @@
 package discord.bot.commands.finals;
 
 public class FinalValues {
-    public static final String prefix = "!";
+    public static final String PREFIX = "!";
 
-    public static final String tempChannel = "temp";
+    public static final String TEMPCHANNEL = "temp";
 
-    public static final String tftCommand = "tft";
+    public static final String TFTCOMMAND = "tft";
 
-    public static final String trumpCommand = "trump";
+    public static final String TRUMPCOMMAND = "trump";
 
-    public static final String pingCommand = "ping";
+    public static final String PINGCOMMAND = "ping";
 
-    public static final String randomMeme = "meme";
+    public static final String RANDOMMEME = "meme";
 
-    public static final String riotStats = "riot";
+    public static final String CATFACT = "catfact";
 
-    public enum catImageAlias {
-        cati,
-        catimage,
-        pus,
-        kitty,
-        mujcek
-    }
+    public static final String CATIMAGE = "cat";
 
-    public enum catFactAlias {
-        catf,
-        pusf,
-        kittyf,
-        mujcekfakt
-    }
+    public static final String RIOTSTATS = "riot";
 
-    public enum deleteMessagesAlias {
-        izbrisi,
-        deletemessages,
-        nestanicrnazvijeri,
-        delete
-    }
+    public static final String DELETE = "delete";
 
-    public enum silenceCommandAlias {
-        tisina,
-        silence,
-        psst
-    }
+    public static final String SILENCECOMMAND = "silence";
+
+    public static final String HELPCOMMAND = "help";
 
 
 }

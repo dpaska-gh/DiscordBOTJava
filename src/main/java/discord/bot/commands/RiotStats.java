@@ -1,38 +1,45 @@
 package discord.bot.commands;
 
 import com.merakianalytics.orianna.Orianna;
-import com.merakianalytics.orianna.types.common.Queue;
 import com.merakianalytics.orianna.types.common.Region;
-import com.merakianalytics.orianna.types.core.league.League;
 import com.merakianalytics.orianna.types.core.staticdata.Champion;
 import com.merakianalytics.orianna.types.core.staticdata.Champions;
 import com.merakianalytics.orianna.types.core.summoner.Summoner;
 import discord.bot.ApiKey;
-import discord.bot.Main;
 import discord.bot.commands.finals.FinalValues;
+import org.javacord.api.event.message.MessageCreateEvent;
 
-public class RiotStats {
+import java.util.Collections;
+import java.util.List;
 
-    public static void getStats() {
-        Main.api.addMessageCreateListener(event -> {
+public class RiotStats implements TemplateCommand {
 
-            String messageContent = event.getMessageContent();
-            String[] split = messageContent.split(" ");
+    @Override
+    public void executeCommand(MessageCreateEvent event) {
+        String messageContent = event.getMessageContent();
+        String[] split = messageContent.split(" ");
 
-            if (split[0].equalsIgnoreCase(FinalValues.prefix + FinalValues.riotStats)) {
-                Orianna.setRiotAPIKey(ApiKey.riotApiKey);
-                Orianna.setDefaultRegion(Region.EUROPE_NORTH_EAST);
-                Summoner summoner = Orianna.summonerNamed(split[1]).get();
+        if (split[0].equalsIgnoreCase(FinalValues.PREFIX + FinalValues.RIOTSTATS)) {
+            Orianna.setRiotAPIKey(ApiKey.riotApiKey);
+            Orianna.setDefaultRegion(Region.EUROPE_NORTH_EAST);
+            Summoner summoner = Orianna.summonerNamed(split[1]).get();
 
-                event.getChannel().sendMessage(summoner.getName() + " is level " + summoner.getLevel() + " on the " + summoner.getRegion() + " server.");
-                Champions champions = Orianna.getChampions();
-                Champion randomChampion = champions.get((int) (Math.random() * champions.size()));
-                event.getChannel().sendMessage("He enjoys playing champions such as " + randomChampion.getName());
+            event.getChannel().sendMessage(summoner.getName() + " is level " + summoner.getLevel() + " on the " + summoner.getRegion() + " server.");
+            Champions champions = Orianna.getChampions();
+            Champion randomChampion = champions.get((int) (Math.random() * champions.size()));
+            event.getChannel().sendMessage("He enjoys playing champions such as " + randomChampion.getName());
 
-                League challengerLeague = Orianna.challengerLeagueInQueue(Queue.RANKED_SOLO).get();
-                Summoner bestNA = challengerLeague.get(0).getSummoner();
-                event.getChannel().sendMessage("He's not as good as <@189090587788443648> at League, but probably a better Java programmer!");
-            }
-        });
+            event.getChannel().sendMessage("He's not as good as <@189090587788443648> at League, but probably a better Java programmer!");
+        }
+    }
+
+    @Override
+    public String getCommandName() {
+        return FinalValues.RIOTSTATS;
+    }
+
+    @Override
+    public List<String> getCommandDescription() {
+        return Collections.singletonList("Returns the stats for riot account.");
     }
 }
