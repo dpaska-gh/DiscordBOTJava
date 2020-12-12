@@ -7,7 +7,7 @@ public class GetYoutubeURL {
     public String a;
 
 
-    public String getURL(MessageCreateEvent event) {
+    public String getResult(MessageCreateEvent event) {
         String messageContent = event.getMessageContent();
         Server server = event.getServer().get();
         String[] split = messageContent.split(" ");
@@ -15,7 +15,15 @@ public class GetYoutubeURL {
         if (split[0].equals(FinalValues.PREFIX + FinalValues.PLAY)) {
             this.a = split[1];
         }
-        return a;
+        return getData(messageContent.replace(FinalValues.PREFIX + FinalValues.PLAY + " ", "").trim());
+    }
+
+    static String getData(String s) {
+        if (s.split(" ").length > 1) {
+            s = String.join(" ", s.split(" "));
+            // System.out.println(s);
+        }
+        return s;
     }
 
 }

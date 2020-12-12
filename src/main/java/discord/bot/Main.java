@@ -1,6 +1,7 @@
 package discord.bot;
 
 import discord.bot.commands.*;
+import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.intent.Intent;
@@ -17,19 +18,19 @@ public class Main {
 
     static {
         //commands.put("!mention", new AtMentionCommand());
-        commands.put("!catfact", new CatFactCommand());
-        commands.put("!cat", new CatImage());
-        commands.put("!delete", new DeleteMessages());
-        commands.put("!help", new HelpCommand());
-        commands.put("!ping", new PongCommand());
-        commands.put("!meme", new RadnomMeme());
-        commands.put("!riot", new RiotStats());
-        commands.put("!silence", new SilenceCommand());
-        commands.put("!temp", new TempChannel());
-        commands.put("!tft", new TftCommand());
-        commands.put("!trump", new TrumpQuoteCommand());
-        commands.put("!play", new JoinBotCommand());
-        commands.put("!odjebi", new DisconnectCommand());
+        commands.put(FinalValues.PREFIX + FinalValues.CATFACT, new CatFactCommand());
+        commands.put(FinalValues.PREFIX + FinalValues.CATIMAGE, new CatImage());
+        commands.put(FinalValues.PREFIX + FinalValues.DELETE, new DeleteMessages());
+        commands.put(FinalValues.PREFIX + FinalValues.HELPCOMMAND, new HelpCommand());
+        commands.put(FinalValues.PREFIX + FinalValues.PINGCOMMAND, new PongCommand());
+        commands.put(FinalValues.PREFIX + FinalValues.RANDOMMEME, new RadnomMeme());
+        commands.put(FinalValues.PREFIX + FinalValues.RIOTSTATS, new RiotStats());
+        commands.put(FinalValues.PREFIX + FinalValues.SILENCECOMMAND, new SilenceCommand());
+        commands.put(FinalValues.PREFIX + FinalValues.TEMPCHANNEL, new TempChannel());
+        commands.put(FinalValues.PREFIX + FinalValues.TFTCOMMAND, new TftCommand());
+        commands.put(FinalValues.PREFIX + FinalValues.TRUMPCOMMAND, new TrumpQuoteCommand());
+        commands.put(FinalValues.PREFIX + FinalValues.PLAY, new JoinBotCommand());
+        commands.put(FinalValues.PREFIX + FinalValues.ODJEBI, new DisconnectCommand());
     }
 
     public static SortedMap<String, TemplateCommand> commands() {

@@ -1,13 +1,10 @@
 package discord.bot.commands;
 
-import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
+import com.sedmelluq.discord.lavaplayer.player.FunctionalResultHandler;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
-import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
-import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
-import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import discord.bot.LavaplayerAudioSource;
 import discord.bot.Main;
 import discord.bot.commands.finals.FinalValues;
@@ -23,6 +20,8 @@ import java.util.List;
 
 
 public class JoinBotCommand implements TemplateCommand {
+    public AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
+    public AudioPlayer PLAYER = playerManager.createPlayer();
 
 
     @Override
@@ -34,46 +33,27 @@ public class JoinBotCommand implements TemplateCommand {
             ServerVoiceChannel channel;
 
             channel = event.getMessage().getAuthor().asUser().get().getConnectedVoiceChannel(server).get();
-            System.out.println(channel.getName());
+            //System.out.println(channel.getName());
+            playerManager = new DefaultAudioPlayerManager();
+            playerManager.registerSourceManager(new YoutubeAudioSourceManager());
+            GetYoutubeURL getURL = new GetYoutubeURL();
 
-            channel.connect().thenAccept(audioConnection -> {
-                AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
-                playerManager.registerSourceManager(new YoutubeAudioSourceManager());
-                AudioPlayer player = playerManager.createPlayer();
-                AudioSource source = new LavaplayerAudioSource(api, player);
-                audioConnection.setAudioSource(source);
-                playerManager.loadItem(urlGetter.getURL(event), new AudioLoadResultHandler() {
-                    @Override
-                    public void trackLoaded(AudioTrack track) {
-                        player.playTrack(track);
-                    }
+            AudioSource source = new LavaplayerAudioSource(api, PLAYER);
 
-                    @Override
-                    public void playlistLoaded(AudioPlaylist playlist) {
-                        for (AudioTrack track : playlist.getTracks()) {
-                            player.playTrack(track);
-                        }
-                    }
-
-                    @Override
-                    public void noMatches() {
-
-                    }
-
-                    @Override
-                    public void loadFailed(FriendlyException exception) {
-                        event.getChannel().sendMessage("Failed to load");
-
-                    }
+            if (server.getAudioConnection().isEmpty()) {
+                channel.connect().thenAccept(audioConnection -> {
+                    audioConnection.setAudioSource(source);
                 });
-            }).exceptionally(e -> {
+            }
 
-                e.printStackTrace();
-                return null;
-            });
+            playerManager.loadItem("ytsearch: " + getURL.getResult(event), new FunctionalResultHandler(null, audioPlaylist -> {
+                PLAYER.playTrack(audioPlaylist.getTracks().get(0));
+                event.getChannel().sendMessage(String.format("Now playing %s.", PLAYER.getPlayingTrack().getInfo().title));
+            }, null, null));
 
 
         }
+
 
     }
 
@@ -86,4 +66,6 @@ public class JoinBotCommand implements TemplateCommand {
     public List<String> getCommandDescription() {
         return Collections.singletonList("Joins the Musicbot.");
     }
+
 }
+
