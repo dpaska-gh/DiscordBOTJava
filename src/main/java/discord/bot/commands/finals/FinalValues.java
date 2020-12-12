@@ -29,5 +29,7 @@ public class FinalValues {
 
     public static final String ODJEBI = "odjebi";
 
+    public static final String VOLUME = "volume";
+
 
 }

@@ -31,6 +31,7 @@ public class Main {
         commands.put(FinalValues.PREFIX + FinalValues.TRUMPCOMMAND, new TrumpQuoteCommand());
         commands.put(FinalValues.PREFIX + FinalValues.PLAY, new JoinBotCommand());
         commands.put(FinalValues.PREFIX + FinalValues.ODJEBI, new DisconnectCommand());
+        commands.put(FinalValues.PREFIX + FinalValues.VOLUME, new VolumeCommand());
     }
 
     public static SortedMap<String, TemplateCommand> commands() {
@@ -38,7 +39,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
         api.addMessageCreateListener(event -> {
 
             try {
@@ -51,6 +51,8 @@ public class Main {
 
             }
         });
+
+
     }
 
 }

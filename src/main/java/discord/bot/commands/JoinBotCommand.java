@@ -20,8 +20,8 @@ import java.util.List;
 
 
 public class JoinBotCommand implements TemplateCommand {
-    public AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
-    public AudioPlayer PLAYER = playerManager.createPlayer();
+    public static AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
+    public static AudioPlayer PLAYER = playerManager.createPlayer();
 
 
     @Override
