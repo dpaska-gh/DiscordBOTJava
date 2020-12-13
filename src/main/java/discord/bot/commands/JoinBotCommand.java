@@ -14,6 +14,7 @@ import org.javacord.api.audio.AudioConnection;
 import org.javacord.api.audio.AudioSource;
 import org.javacord.api.entity.channel.ServerVoiceChannel;
 import org.javacord.api.entity.server.Server;
+import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.util.Collections;
@@ -29,15 +30,25 @@ public class JoinBotCommand implements TemplateCommand {
 
     @Override
     public void executeCommand(MessageCreateEvent event) {
+
         Server server = event.getServer().get();
+
         server1 = server;
+
         DiscordApi api = Main.api;
+
         PLAYER.addListener(trackScheduler);
-        GetYoutubeURL urlGetter = new GetYoutubeURL();
+
         if (event.getMessage().getContent().contains(FinalValues.PREFIX + FinalValues.PLAY)) {
             ServerVoiceChannel channel;
+            User user = event.getMessage().getUserAuthor().get();
 
-            channel = event.getMessage().getAuthor().asUser().get().getConnectedVoiceChannel(server).get();
+            if (user.getConnectedVoiceChannel(server).isEmpty()) {
+                event.getChannel().sendMessage("You must be connected to a voice channel in order to listen to music!");
+            }
+
+            channel = user.getConnectedVoiceChannel(server).get();
+
             //System.out.println(channel.getName());
             playerManager = new DefaultAudioPlayerManager();
             playerManager.registerSourceManager(new YoutubeAudioSourceManager());

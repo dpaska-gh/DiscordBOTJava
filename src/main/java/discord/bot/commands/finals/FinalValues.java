@@ -1,7 +1,18 @@
 package discord.bot.commands.finals;
 
 public class FinalValues {
-    public static final String PREFIX = "!";
+
+    public static String getPREFIX() {
+        return PREFIX;
+    }
+
+    public static String PREFIX = "!";
+
+    public static void setPREFIX(String PREFIX) {
+        FinalValues.PREFIX = PREFIX;
+    }
+
+    public static final String PREFIXCHANGE = "prefix";
 
     public static final String TEMPCHANNEL = "temp";
 
@@ -30,6 +41,10 @@ public class FinalValues {
     public static final String ODJEBI = "odjebi";
 
     public static final String VOLUME = "volume";
+
+    public static final String SKIP = "skip";
+
+    public static final String QUEUE = "q";
 
 
 }

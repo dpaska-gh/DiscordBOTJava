@@ -14,10 +14,12 @@ public class Main {
     public static final String token = ApiKey.token;
 
     public static final DiscordApi api = new DiscordApiBuilder().setToken(token).setAllNonPrivilegedIntentsExcept(Intent.GUILD_WEBHOOKS).login().join();
-    private static SortedMap<String, TemplateCommand> commands = new TreeMap<>();
 
-    static {
+    private static SortedMap<String, TemplateCommand> comm;
+
+    public static SortedMap<String, TemplateCommand> setCommands() {
         //commands.put("!mention", new AtMentionCommand());
+        SortedMap<String, TemplateCommand> commands = new TreeMap<>();
         commands.put(FinalValues.PREFIX + FinalValues.CATFACT, new CatFactCommand());
         commands.put(FinalValues.PREFIX + FinalValues.CATIMAGE, new CatImage());
         commands.put(FinalValues.PREFIX + FinalValues.DELETE, new DeleteMessages());
@@ -32,20 +34,25 @@ public class Main {
         commands.put(FinalValues.PREFIX + FinalValues.PLAY, new JoinBotCommand());
         commands.put(FinalValues.PREFIX + FinalValues.ODJEBI, new DisconnectCommand());
         commands.put(FinalValues.PREFIX + FinalValues.VOLUME, new VolumeCommand());
+        commands.put(FinalValues.PREFIX + FinalValues.SKIP, new SkipCommand());
+        commands.put(FinalValues.PREFIX + FinalValues.QUEUE, new QueueCommand());
+        commands.put(FinalValues.PREFIX + FinalValues.PREFIXCHANGE, new PrefixCommand());
+        return commands;
     }
 
     public static SortedMap<String, TemplateCommand> commands() {
-        return Collections.unmodifiableSortedMap(commands);
+        return Collections.unmodifiableSortedMap(comm);
     }
 
     public static void main(String[] args) {
-        api.addMessageCreateListener(event -> {
 
+        api.addMessageCreateListener(event -> {
             try {
                 if (!event.getMessage().getUserAuthor().get().isBot()) {
                     String message = event.getMessageContent().toLowerCase();
                     String[] split = message.split(" ");
-                    commands.get(split[0]).executeCommand(event);
+                    comm = setCommands();
+                    comm.get(split[0]).executeCommand(event);
                 }
             } catch (NullPointerException ignored) {
 

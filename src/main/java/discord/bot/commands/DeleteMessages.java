@@ -22,9 +22,13 @@ public class DeleteMessages implements TemplateCommand {
         TextChannel channel = event.getChannel();
 
         if (split[0].equalsIgnoreCase(FinalValues.PREFIX + FinalValues.DELETE)) {
-            MessageSet messageSet = channel.getMessagesBefore(Integer.parseInt(split[1]), message).join();
-            Message.delete(Main.api, messageSet);
-            Message.delete(Main.api, message);
+            if (Integer.parseInt(split[1]) >= 1) {
+                MessageSet messageSet = channel.getMessagesBefore(Integer.parseInt(split[1]), message).join();
+                Message.delete(Main.api, messageSet);
+                Message.delete(Main.api, message);
+            } else {
+                event.getChannel().sendMessage("Please enter a higher or equal value than 1");
+            }
         }
 
     }
