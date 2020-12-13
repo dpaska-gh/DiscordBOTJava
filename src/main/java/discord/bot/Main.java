@@ -20,23 +20,23 @@ public class Main {
     public static SortedMap<String, TemplateCommand> setCommands() {
         //commands.put("!mention", new AtMentionCommand());
         SortedMap<String, TemplateCommand> commands = new TreeMap<>();
-        commands.put(FinalValues.PREFIX + FinalValues.CATFACT, new CatFactCommand());
-        commands.put(FinalValues.PREFIX + FinalValues.CATIMAGE, new CatImage());
-        commands.put(FinalValues.PREFIX + FinalValues.DELETE, new DeleteMessages());
-        commands.put(FinalValues.PREFIX + FinalValues.HELPCOMMAND, new HelpCommand());
-        commands.put(FinalValues.PREFIX + FinalValues.PINGCOMMAND, new PongCommand());
-        commands.put(FinalValues.PREFIX + FinalValues.RANDOMMEME, new RadnomMeme());
-        commands.put(FinalValues.PREFIX + FinalValues.RIOTSTATS, new RiotStats());
-        commands.put(FinalValues.PREFIX + FinalValues.SILENCECOMMAND, new SilenceCommand());
-        commands.put(FinalValues.PREFIX + FinalValues.TEMPCHANNEL, new TempChannel());
-        commands.put(FinalValues.PREFIX + FinalValues.TFTCOMMAND, new TftCommand());
-        commands.put(FinalValues.PREFIX + FinalValues.TRUMPCOMMAND, new TrumpQuoteCommand());
-        commands.put(FinalValues.PREFIX + FinalValues.PLAY, new JoinBotCommand());
-        commands.put(FinalValues.PREFIX + FinalValues.ODJEBI, new DisconnectCommand());
-        commands.put(FinalValues.PREFIX + FinalValues.VOLUME, new VolumeCommand());
-        commands.put(FinalValues.PREFIX + FinalValues.SKIP, new SkipCommand());
-        commands.put(FinalValues.PREFIX + FinalValues.QUEUE, new QueueCommand());
-        commands.put(FinalValues.PREFIX + FinalValues.PREFIXCHANGE, new PrefixCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.CATFACT, new CatFactCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.CATIMAGE, new CatImage());
+        commands.put(FinalValues.getPREFIX() + FinalValues.DELETE, new DeleteMessages());
+        commands.put(FinalValues.getPREFIX()+ FinalValues.HELPCOMMAND, new HelpCommand());
+        commands.put(FinalValues.getPREFIX()+ FinalValues.PINGCOMMAND, new PongCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.RANDOMMEME, new RadnomMeme());
+        commands.put(FinalValues.getPREFIX() + FinalValues.RIOTSTATS, new RiotStats());
+        commands.put(FinalValues.getPREFIX() + FinalValues.SILENCECOMMAND, new SilenceCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.TEMPCHANNEL, new TempChannel());
+        commands.put(FinalValues.getPREFIX() + FinalValues.TFTCOMMAND, new TftCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.TRUMPCOMMAND, new TrumpQuoteCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.PLAY, new JoinBotCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.ODJEBI, new DisconnectCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.VOLUME, new VolumeCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.SKIP, new SkipCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.QUEUE, new QueueCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.SET, new SetCommand());
         return commands;
     }
 
