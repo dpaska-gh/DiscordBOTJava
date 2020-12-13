@@ -146,6 +146,16 @@ public class FinalValues {
         FinalValues.QUEUE = QUEUE;
     }
 
+    public static String getHI() {
+        return HI;
+    }
+
+    public static void setHI(String HI) {
+        FinalValues.HI = HI;
+    }
+
+    public static String HI="bok";
+
     public static String PREFIX = "!";
 
     public static  String SET = "set";

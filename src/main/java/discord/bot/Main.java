@@ -23,8 +23,8 @@ public class Main {
         commands.put(FinalValues.getPREFIX() + FinalValues.CATFACT, new CatFactCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.CATIMAGE, new CatImage());
         commands.put(FinalValues.getPREFIX() + FinalValues.DELETE, new DeleteMessages());
-        commands.put(FinalValues.getPREFIX()+ FinalValues.HELPCOMMAND, new HelpCommand());
-        commands.put(FinalValues.getPREFIX()+ FinalValues.PINGCOMMAND, new PongCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.HELPCOMMAND, new HelpCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.PINGCOMMAND, new PongCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.RANDOMMEME, new RadnomMeme());
         commands.put(FinalValues.getPREFIX() + FinalValues.RIOTSTATS, new RiotStats());
         commands.put(FinalValues.getPREFIX() + FinalValues.SILENCECOMMAND, new SilenceCommand());
@@ -37,6 +37,7 @@ public class Main {
         commands.put(FinalValues.getPREFIX() + FinalValues.SKIP, new SkipCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.QUEUE, new QueueCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.SET, new SetCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.HI, new HiCommand());
         return commands;
     }
 
@@ -45,6 +46,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
+
+     //   NewMemberListener.executeCommand();
+//  ne radi
 
         api.addMessageCreateListener(event -> {
             try {
@@ -59,6 +63,7 @@ public class Main {
             }
         });
 
+        UserJoinServer.executeCommand();
         DisconnectOnFinish.onFinish();
 
     }
