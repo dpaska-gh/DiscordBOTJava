@@ -13,6 +13,10 @@ public class DisconnectCommand implements TemplateCommand {
         Server server = event.getServer().get();
         if (event.getMessage().getContent().equalsIgnoreCase(FinalValues.PREFIX + FinalValues.ODJEBI)) {
             event.getChannel().sendMessage("Odjebi ti.");
+
+            JoinBotCommand.trackScheduler.queue.clear();
+            JoinBotCommand.PLAYER.destroy();
+
             server.getAudioConnection().get().close();
 
         }

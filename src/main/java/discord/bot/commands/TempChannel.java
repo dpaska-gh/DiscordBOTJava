@@ -1,6 +1,5 @@
 package discord.bot.commands;
 
-import discord.bot.Main;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.entity.channel.ServerVoiceChannel;
 import org.javacord.api.entity.channel.ServerVoiceChannelBuilder;
@@ -19,7 +18,7 @@ public class TempChannel implements TemplateCommand {
     public void executeCommand(MessageCreateEvent event) {
 
         if (event.getMessageContent().equalsIgnoreCase(FinalValues.PREFIX + FinalValues.TEMPCHANNEL)) {
-            Server server = api.getServerById("774334763653136384").get();
+            Server server = event.getServer().get();
             ServerVoiceChannel channel = new ServerVoiceChannelBuilder(server)
                     .setName("Temporary Channel")
                     .setUserlimit(20)

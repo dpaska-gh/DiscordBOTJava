@@ -10,6 +10,7 @@ import discord.bot.Main;
 import discord.bot.commands.finals.FinalValues;
 import discord.bot.commands.finals.GetYoutubeURL;
 import org.javacord.api.DiscordApi;
+import org.javacord.api.audio.AudioConnection;
 import org.javacord.api.audio.AudioSource;
 import org.javacord.api.entity.channel.ServerVoiceChannel;
 import org.javacord.api.entity.server.Server;
@@ -22,12 +23,16 @@ import java.util.List;
 public class JoinBotCommand implements TemplateCommand {
     public static AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
     public static AudioPlayer PLAYER = playerManager.createPlayer();
-
+    public static TrackScheduler trackScheduler = new TrackScheduler(PLAYER);
+    public static AudioConnection audioConnection;
+    public static Server server1;
 
     @Override
     public void executeCommand(MessageCreateEvent event) {
         Server server = event.getServer().get();
+        server1 = server;
         DiscordApi api = Main.api;
+        PLAYER.addListener(trackScheduler);
         GetYoutubeURL urlGetter = new GetYoutubeURL();
         if (event.getMessage().getContent().contains(FinalValues.PREFIX + FinalValues.PLAY)) {
             ServerVoiceChannel channel;
@@ -43,12 +48,13 @@ public class JoinBotCommand implements TemplateCommand {
             if (server.getAudioConnection().isEmpty()) {
                 channel.connect().thenAccept(audioConnection -> {
                     audioConnection.setAudioSource(source);
+                    JoinBotCommand.audioConnection = audioConnection;
                 });
             }
 
             playerManager.loadItem("ytsearch: " + getURL.getResult(event), new FunctionalResultHandler(null, audioPlaylist -> {
-                PLAYER.playTrack(audioPlaylist.getTracks().get(0));
-                event.getChannel().sendMessage(String.format("Now playing %s.", PLAYER.getPlayingTrack().getInfo().title));
+                trackScheduler.queue(audioPlaylist.getTracks().get(0));
+                event.getChannel().sendMessage(String.format("Added to queue: **%s**", audioPlaylist.getTracks().get(trackScheduler.queue.size()).getInfo().title));
             }, null, null));
 
 
