@@ -7,6 +7,7 @@ import com.sedmelluq.discord.lavaplayer.player.FunctionalResultHandler;
 import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
 import discord.bot.LavaplayerAudioSource;
 import discord.bot.Main;
+import discord.bot.commands.finals.BotEmbeds;
 import discord.bot.commands.finals.FinalValues;
 import discord.bot.commands.finals.GetYoutubeURL;
 import org.javacord.api.DiscordApi;
@@ -65,7 +66,8 @@ public class JoinBotCommand implements TemplateCommand {
 
             playerManager.loadItem("ytsearch: " + getURL.getResult(event), new FunctionalResultHandler(null, audioPlaylist -> {
                 trackScheduler.queue(audioPlaylist.getTracks().get(0));
-                event.getChannel().sendMessage(String.format("Added to queue: **%s**", audioPlaylist.getTracks().get(trackScheduler.queue.size()).getInfo().title));
+                event.getChannel().sendMessage(BotEmbeds.createMusicEmbed(audioPlaylist.getTracks().get(0)));
+                //event.getChannel().sendMessage(String.format("Added to queue: **%s**", audioPlaylist.getTracks().get(trackScheduler.queue.size()).getInfo().title));
             }, null, null));
 
 

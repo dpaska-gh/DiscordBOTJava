@@ -5,7 +5,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import discord.bot.ApiKey;
+import discord.bot.commands.finals.BotEmbeds;
 import discord.bot.commands.finals.FinalValues;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.io.BufferedReader;
@@ -74,12 +76,23 @@ public class TftCommand implements TemplateCommand {
 
             JsonElement winsElement = array.get(0);
             JsonObject wins = winsElement.getAsJsonObject();
-
+            String sN = wins.get("summonerName").getAsString();
+            String tier = wins.get("tier").getAsString();
+            String rank = wins.get("rank").getAsString();
+            String LP = wins.get("leaguePoints").getAsString();
+            String w = wins.get("wins").getAsString();
+            String l = wins.get("losses").getAsString();
+            Float winRate = (Float.parseFloat(w) * 100) / ((Float.parseFloat(l)) + Float.parseFloat(w));
+            /*
             String sb = wins.get("summonerName").getAsString() + "\n" +
                     wins.get("tier").getAsString() + "   " + wins.get("rank").getAsString() + "   " + wins.get("leaguePoints").getAsString() + "lp\n" +
                     wins.get("wins").getAsString() + " wins " +
                     Float.parseFloat(wins.get("wins").getAsString()) * 100 / (Float.parseFloat(wins.get("losses").getAsString()) + Float.parseFloat(wins.get("wins").getAsString())) + "% winrate\n";
-            event.getChannel().sendMessage(sb);
+             */
+
+            EmbedBuilder tftEmbed = BotEmbeds.createTFTEmbed(sN, tier, rank, LP, w, winRate, l);
+            event.getChannel().sendMessage(tftEmbed);
+
         } catch (IOException e) {
             event.getChannel().sendMessage("Player not found");
         }
