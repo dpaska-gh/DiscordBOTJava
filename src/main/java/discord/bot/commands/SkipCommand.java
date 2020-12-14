@@ -14,9 +14,14 @@ public class SkipCommand implements TemplateCommand {
 
             String[] split = event.getMessageContent().split(" ");
 
+            if (JoinBotCommand.trackScheduler.queue.size() == 0)
+                DisconnectOnFinish.onFinish();
+
             if (split.length == 1) {
                 JoinBotCommand.trackScheduler.nextTrack();
                 event.getChannel().sendMessage("The track has been skipped.");
+
+
             } else if (split.length == 2) {
                 try {
                     Integer num = Integer.parseInt(split[1]);

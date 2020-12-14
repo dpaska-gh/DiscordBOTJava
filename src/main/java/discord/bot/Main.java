@@ -4,7 +4,6 @@ import discord.bot.commands.*;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
-import org.javacord.api.entity.intent.Intent;
 
 import java.util.Collections;
 import java.util.SortedMap;
@@ -13,7 +12,7 @@ import java.util.TreeMap;
 public class Main {
     public static final String token = ApiKey.token;
 
-    public static final DiscordApi api = new DiscordApiBuilder().setToken(token).setAllNonPrivilegedIntentsExcept(Intent.GUILD_WEBHOOKS).login().join();
+    public static final DiscordApi api = new DiscordApiBuilder().setToken(token).setAllIntents().login().join();
 
     private static SortedMap<String, TemplateCommand> comm;
 
@@ -47,7 +46,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-     //   NewMemberListener.executeCommand();
+
 //  ne radi
 
         api.addMessageCreateListener(event -> {
@@ -61,11 +60,12 @@ public class Main {
             } catch (NullPointerException ignored) {
 
             }
+            FifiMudrostiListener.executeFifiMudrosti(event);
         });
 
         UserJoinServer.executeCommand();
         DisconnectOnFinish.onFinish();
-
+        NewMemberListener.executeCommand();
     }
 
 }
