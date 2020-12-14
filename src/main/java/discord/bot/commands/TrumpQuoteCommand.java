@@ -2,6 +2,7 @@ package discord.bot.commands;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import discord.bot.commands.finals.BotEmbeds;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.event.message.MessageCreateEvent;
 
@@ -27,7 +28,9 @@ public class TrumpQuoteCommand implements TemplateCommand {
                 String inputLine = in.readLine();
 
                 JsonObject array = JsonParser.parseString(inputLine).getAsJsonObject();
-                event.getChannel().sendMessage(array.get("value").getAsString());
+                String quote = array.get("value").getAsString();
+                //event.getChannel().sendMessage(array.get("value").getAsString());
+                event.getChannel().sendMessage(BotEmbeds.trumpEmbed(quote));
             } catch (Exception e) {
                 System.out.println(e);
             }

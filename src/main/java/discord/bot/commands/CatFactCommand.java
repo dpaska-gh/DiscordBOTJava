@@ -2,6 +2,7 @@ package discord.bot.commands;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import discord.bot.commands.finals.BotEmbeds;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.event.message.MessageCreateEvent;
 
@@ -30,7 +31,9 @@ public class CatFactCommand implements TemplateCommand {
                         String inputLine = in.readLine();
 
                         JsonObject array = JsonParser.parseString(inputLine).getAsJsonObject();
-                        event.getChannel().sendMessage(array.get("fact").getAsString());
+                        String catFact = array.get("fact").getAsString();
+                        //event.getChannel().sendMessage(array.get("fact").getAsString());
+                        event.getChannel().sendMessage(BotEmbeds.catFactEmbed(catFact));
                     } catch (Exception e) {
                         System.out.println(e);
                     }

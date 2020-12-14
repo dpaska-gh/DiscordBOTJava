@@ -28,7 +28,7 @@ public class BotEmbeds {
         ProfileIcon profileIcon = summoner.getProfileIcon();
 
         return new EmbedBuilder()
-                .setTitle("TFT Profile of: " + summonerName)
+                .setTitle("**TFT Profile of:** " + summonerName)
                 .addField("Tier", tier + " " + rank + " - " + leaguePoints + "LP")
                 .addField("Losses", losses)
                 .addField("Wins", wins)
@@ -60,6 +60,18 @@ public class BotEmbeds {
     public static EmbedBuilder tempEmbed(String channelName) {
         return new EmbedBuilder().setTitle("Created temporary channel")
                 .setDescription("With the name: " + channelName);
+    }
+
+    public static EmbedBuilder trumpEmbed(String quote) {
+        return new EmbedBuilder()
+                .setTitle("Trump said:")
+                .setDescription(quote);
+    }
+
+    public static EmbedBuilder catFactEmbed(String catFact) {
+        return new EmbedBuilder()
+                .setTitle("Well known cat fact:")
+                .setDescription(catFact);
     }
 
 
