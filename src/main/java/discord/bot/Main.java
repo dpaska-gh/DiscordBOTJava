@@ -47,7 +47,6 @@ public class Main {
     public static void main(String[] args) {
 
 
-//  ne radi
 
         api.addMessageCreateListener(event -> {
             try {

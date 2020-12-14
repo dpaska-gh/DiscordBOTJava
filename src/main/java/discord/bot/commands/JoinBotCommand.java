@@ -28,7 +28,7 @@ public class JoinBotCommand implements TemplateCommand {
     public static TrackScheduler trackScheduler = new TrackScheduler(PLAYER);
     public static AudioConnection audioConnection;
     public static Server server1;
-
+    public static User user;
     @Override
     public void executeCommand(MessageCreateEvent event) {
 
@@ -42,7 +42,7 @@ public class JoinBotCommand implements TemplateCommand {
 
         if (event.getMessage().getContent().contains(FinalValues.PREFIX + FinalValues.PLAY)) {
             ServerVoiceChannel channel;
-            User user = event.getMessage().getUserAuthor().get();
+            user = event.getMessage().getUserAuthor().get();
 
             if (user.getConnectedVoiceChannel(server).isEmpty()) {
                 event.getChannel().sendMessage("You must be connected to a voice channel in order to listen to music!");

@@ -29,7 +29,7 @@ public class TftCommand implements TemplateCommand {
             if (split[1].equalsIgnoreCase("gentlmens"))
                 getGentlemens(event);
             else
-                printData(event, name.replace("!tft ", "").trim());
+                printData(event, name.replace(FinalValues.PREFIX + FinalValues.TFTCOMMAND + " ", "").trim());
         }
     }
 
@@ -54,7 +54,6 @@ public class TftCommand implements TemplateCommand {
     private static void printData(MessageCreateEvent event, String s) {
         try {
             if (s.split(" ").length > 1) {
-                System.out.println(s.length());
                 s = String.join("%20", s.split(" "));
             }
             URL summonerName = new URL
@@ -83,6 +82,7 @@ public class TftCommand implements TemplateCommand {
             String w = wins.get("wins").getAsString();
             String l = wins.get("losses").getAsString();
             Float winRate = (Float.parseFloat(w) * 100) / ((Float.parseFloat(l)) + Float.parseFloat(w));
+
             /*
             String sb = wins.get("summonerName").getAsString() + "\n" +
                     wins.get("tier").getAsString() + "   " + wins.get("rank").getAsString() + "   " + wins.get("leaguePoints").getAsString() + "lp\n" +

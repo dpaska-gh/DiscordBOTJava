@@ -18,7 +18,8 @@ public class BotEmbeds {
                 .setTitle("Added to queue")
                 .setDescription(track.getInfo().title)
                 .setThumbnail("https://img.youtube.com/vi/" + track.getInfo().identifier + "/0.jpg")
-                .addField("URL", track.getInfo().uri);
+                .addField("URL", track.getInfo().uri)
+                .setFooter("Requested by: " + JoinBotCommand.user.getName());
     }
 
     public static EmbedBuilder createTFTEmbed(String summonerName, String tier, String rank, String leaguePoints, String wins, Float wr, String losses) {
