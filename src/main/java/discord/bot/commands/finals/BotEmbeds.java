@@ -52,4 +52,15 @@ public class BotEmbeds {
                 .setDescription(stringBuilder.toString());
 
     }
+
+    public static EmbedBuilder musicDisconnectEmbed() {
+        return new EmbedBuilder().setTitle("Disconnected because I had no music and was in channel for too long.");
+    }
+
+    public static EmbedBuilder tempEmbed(String channelName) {
+        return new EmbedBuilder().setTitle("Created temporary channel")
+                .setDescription("With the name: " + channelName);
+    }
+
+
 }

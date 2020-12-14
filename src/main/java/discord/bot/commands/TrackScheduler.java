@@ -4,7 +4,10 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import discord.bot.commands.finals.BotEmbeds;
 import org.javacord.api.audio.AudioConnection;
+import org.javacord.api.entity.channel.ServerTextChannel;
+import org.javacord.api.entity.server.Server;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -60,7 +63,6 @@ public class TrackScheduler extends AudioEventAdapter {
                 if (JoinBotCommand.server1.getAudioConnection().isPresent()) {
 
                     AudioConnection connection = JoinBotCommand.audioConnection;
-
                     try {
                         TimeUnit.SECONDS.sleep(10);
                     } catch (InterruptedException e) {
@@ -68,6 +70,9 @@ public class TrackScheduler extends AudioEventAdapter {
                     }
 
                     connection.close();
+                    Server server = connection.getServer();
+                    ServerTextChannel systemChannel = server.getSystemChannel().get();
+                    systemChannel.sendMessage(BotEmbeds.musicDisconnectEmbed());
 
                 }
 

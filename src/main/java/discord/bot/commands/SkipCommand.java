@@ -1,6 +1,9 @@
 package discord.bot.commands;
 
+import discord.bot.Main;
 import discord.bot.commands.finals.FinalValues;
+import org.javacord.api.entity.channel.ServerVoiceChannel;
+import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.util.Collections;
@@ -11,22 +14,24 @@ public class SkipCommand implements TemplateCommand {
     public void executeCommand(MessageCreateEvent event) {
 
         if (event.getMessageContent().startsWith(FinalValues.PREFIX + FinalValues.SKIP)) {
-
+            User bot = Main.api.getYourself();
+            ServerVoiceChannel channel = JoinBotCommand.audioConnection.getChannel();
             String[] split = event.getMessageContent().split(" ");
 
-            if (JoinBotCommand.trackScheduler.queue.size() == 0)
+            if (bot.isConnected(channel) && split.length == 1) {
+                event.getChannel().sendMessage("The track has been skipped.");
+            }
+            if (JoinBotCommand.trackScheduler.queue.size() == 0 && bot.isConnected(channel)) {
                 DisconnectOnFinish.onFinish();
-
+            }
             if (split.length == 1) {
                 JoinBotCommand.trackScheduler.nextTrack();
-                event.getChannel().sendMessage("The track has been skipped.");
-
-
             } else if (split.length == 2) {
                 try {
                     Integer num = Integer.parseInt(split[1]);
 
-                    if (num == 1|| num>=JoinBotCommand.trackScheduler.queue.size()) throw new NumberFormatException();
+                    if (num == 1 || num >= JoinBotCommand.trackScheduler.queue.size())
+                        throw new NumberFormatException();
 
                     System.out.println(num);
                     for (int i = 0; i < num; i++) {

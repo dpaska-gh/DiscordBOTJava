@@ -192,5 +192,7 @@ public class FinalValues {
 
     public static String QUEUE = "q";
 
+    public static String TEMPDEFAULT = "Temporary Channel";
+
 
 }

@@ -1,5 +1,6 @@
 package discord.bot.commands;
 
+import discord.bot.commands.finals.BotEmbeds;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.entity.channel.ServerVoiceChannel;
 import org.javacord.api.entity.channel.ServerVoiceChannelBuilder;
@@ -17,13 +18,35 @@ public class TempChannel implements TemplateCommand {
     @Override
     public void executeCommand(MessageCreateEvent event) {
 
-        if (event.getMessageContent().equalsIgnoreCase(FinalValues.PREFIX + FinalValues.TEMPCHANNEL)) {
+        if (event.getMessageContent().startsWith(FinalValues.PREFIX + FinalValues.TEMPCHANNEL)) {
             Server server = event.getServer().get();
-            ServerVoiceChannel channel = new ServerVoiceChannelBuilder(server)
-                    .setName("Temporary Channel")
-                    .setUserlimit(20)
-                    .create()
-                    .join();
+            String messageContent = event.getMessageContent();
+            String[] split = messageContent.split(" ");
+            String s = messageContent.replace(FinalValues.PREFIX + FinalValues.TEMPCHANNEL, "");
+            ServerVoiceChannel channel;
+
+            if (split.length == 2) {
+
+                channel = new ServerVoiceChannelBuilder(server)
+                        .setName(split[1])
+                        .setUserlimit(20)
+                        .create()
+                        .join();
+            } else if (split.length == 1) {
+                channel = new ServerVoiceChannelBuilder(server)
+                        .setName(FinalValues.TEMPDEFAULT)
+                        .setUserlimit(20)
+                        .create()
+                        .join();
+            } else {
+                channel = new ServerVoiceChannelBuilder(server)
+                        .setName(getString(s))
+                        .setUserlimit(20)
+                        .create()
+                        .join();
+            }
+
+            event.getChannel().sendMessage(BotEmbeds.tempEmbed(channel.getName()));
 
             channel.addServerVoiceChannelMemberLeaveListener(eventListener -> {
                 if (eventListener.getChannel().getConnectedUserIds().isEmpty()) {
@@ -38,6 +61,13 @@ public class TempChannel implements TemplateCommand {
             }, 30, TimeUnit.SECONDS);
         }
 
+    }
+
+    public static String getString(String s) {
+        if (s.split(" ").length > 1) {
+            s = String.join(" ", s.split(" "));
+        }
+        return s;
     }
 
     @Override
