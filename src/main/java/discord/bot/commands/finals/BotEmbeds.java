@@ -6,7 +6,11 @@ import com.merakianalytics.orianna.types.core.staticdata.ProfileIcon;
 import com.merakianalytics.orianna.types.core.summoner.Summoner;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import discord.bot.ApiKey;
+import discord.bot.commands.JoinBotCommand;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
+
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class BotEmbeds {
     public static EmbedBuilder createMusicEmbed(AudioTrack track) {
@@ -24,7 +28,7 @@ public class BotEmbeds {
         ProfileIcon profileIcon = summoner.getProfileIcon();
 
         return new EmbedBuilder()
-                .setTitle("TFT Profile of " + summonerName)
+                .setTitle("TFT Profile of: " + summonerName)
                 .addField("Tier", tier + " " + rank + " - " + leaguePoints + "LP")
                 .addField("Losses", losses)
                 .addField("Wins", wins)
@@ -32,5 +36,20 @@ public class BotEmbeds {
                 .setThumbnail(profileIcon.getImage().getURL());
     }
 
+    public static EmbedBuilder musicQueueEmbed(BlockingQueue<AudioTrack> queue) {
 
+        EmbedBuilder embedBuilder = new EmbedBuilder();
+
+        AtomicInteger i = new AtomicInteger();
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(String.format(("**Now playing: %s** \n"), JoinBotCommand.PLAYER.getPlayingTrack().getInfo().title));
+        JoinBotCommand.trackScheduler.queue.forEach(elements -> {
+            i.getAndIncrement();
+            stringBuilder.append(String.format("**%s.** %s \n", i.toString(), elements.getInfo().title));
+        });
+
+        return embedBuilder.setTitle("Current music queue: ")
+                .setDescription(stringBuilder.toString());
+
+    }
 }

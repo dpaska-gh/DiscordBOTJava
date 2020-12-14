@@ -1,5 +1,6 @@
 package discord.bot.commands;
 
+import discord.bot.commands.finals.BotEmbeds;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.event.message.MessageCreateEvent;
 
@@ -14,15 +15,16 @@ public class QueueCommand implements TemplateCommand {
             AtomicInteger i = new AtomicInteger();
 
             StringBuilder stringBuilder = new StringBuilder();
-
+/*
             stringBuilder.append(String.format("Now playing: **%s** \n", JoinBotCommand.PLAYER.getPlayingTrack().getInfo().title));
 
             JoinBotCommand.trackScheduler.queue.forEach(elements -> {
                 i.getAndIncrement();
                 stringBuilder.append(String.format("%s. %s \n", i.toString(), elements.getInfo().title));
             });
-
-            event.getChannel().sendMessage(stringBuilder.toString());
+ */
+            //event.getChannel().sendMessage(stringBuilder.toString());
+            event.getChannel().sendMessage(BotEmbeds.musicQueueEmbed(JoinBotCommand.trackScheduler.queue));
         }
     }
 

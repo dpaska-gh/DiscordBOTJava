@@ -154,43 +154,43 @@ public class FinalValues {
         FinalValues.HI = HI;
     }
 
-    public static String HI="bok";
+    public static String HI = "bok";
 
     public static String PREFIX = "!";
 
-    public static  String SET = "set";
+    public static String SET = "set";
 
-    public static  String TEMPCHANNEL = "temp";
+    public static String TEMPCHANNEL = "temp";
 
-    public static  String TFTCOMMAND = "tft";
+    public static String TFTCOMMAND = "tft";
 
-    public static  String TRUMPCOMMAND = "trump";
+    public static String TRUMPCOMMAND = "trump";
 
-    public static  String PINGCOMMAND = "ping";
+    public static String PINGCOMMAND = "ping";
 
-    public static  String RANDOMMEME = "meme";
+    public static String RANDOMMEME = "meme";
 
-    public static  String CATFACT = "catfact";
+    public static String CATFACT = "catfact";
 
     public static String CATIMAGE = "cat";
 
-    public static  String RIOTSTATS = "riot";
+    public static String RIOTSTATS = "riot";
 
-    public static  String DELETE = "delete";
+    public static String DELETE = "delete";
 
-    public static  String SILENCECOMMAND = "silence";
+    public static String SILENCECOMMAND = "silence";
 
-    public static  String HELPCOMMAND = "help";
+    public static String HELPCOMMAND = "help";
 
-    public static  String PLAY = "play";
+    public static String PLAY = "play";
 
-    public static  String ODJEBI = "odjebi";
+    public static String ODJEBI = "odjebi";
 
-    public static  String VOLUME = "volume";
+    public static String VOLUME = "volume";
 
-    public static  String SKIP = "skip";
+    public static String SKIP = "skip";
 
-    public static  String QUEUE = "q";
+    public static String QUEUE = "q";
 
 
 }
