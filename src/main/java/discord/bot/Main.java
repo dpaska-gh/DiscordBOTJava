@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+
 public class Main {
     public static final String token = ApiKey.token;
 
@@ -50,12 +51,13 @@ public class Main {
 
         api.addMessageCreateListener(event -> {
             try {
-                if (!event.getMessage().getUserAuthor().get().isBot()) {
-                    String message = event.getMessageContent().toLowerCase();
-                    String[] split = message.split(" ");
-                    comm = setCommands();
-                    comm.get(split[0]).executeCommand(event);
-                }
+                if (event.getMessage().getUserAuthor().isPresent())
+                    if (!event.getMessage().getUserAuthor().get().isBot()) {
+                        String message = event.getMessageContent().toLowerCase();
+                        String[] split = message.split(" ");
+                        comm = setCommands();
+                        comm.get(split[0]).executeCommand(event);
+                    }
             } catch (NullPointerException ignored) {
 
             }

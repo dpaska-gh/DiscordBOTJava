@@ -22,7 +22,7 @@ public class BotEmbeds {
                 .setFooter("Requested by: " + JoinBotCommand.user.getName());
     }
 
-    public static EmbedBuilder createTFTEmbed(String summonerName, String tier, String rank, String leaguePoints, String wins, Float wr, String losses) {
+    public static EmbedBuilder createTFTEmbed(String placement, String summonerName, String tier, String rank, String leaguePoints, String wins, Float wr, String losses) {
         Orianna.setRiotAPIKey(ApiKey.riotApiKey);
         Orianna.setDefaultRegion(Region.EUROPE_NORTH_EAST);
         Summoner summoner = Orianna.summonerNamed(summonerName).get();
@@ -34,6 +34,7 @@ public class BotEmbeds {
                 .addField("Losses", losses)
                 .addField("Wins", wins)
                 .addField("Winrate", wr.toString() + "%")
+                .addField("Last game he played, " + summonerName + " placed", placement)
                 .setThumbnail(profileIcon.getImage().getURL());
     }
 

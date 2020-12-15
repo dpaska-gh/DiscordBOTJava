@@ -29,10 +29,10 @@ public class TrumpQuoteCommand implements TemplateCommand {
 
                 JsonObject array = JsonParser.parseString(inputLine).getAsJsonObject();
                 String quote = array.get("value").getAsString();
-                //event.getChannel().sendMessage(array.get("value").getAsString());
+
                 event.getChannel().sendMessage(BotEmbeds.trumpEmbed(quote));
             } catch (Exception e) {
-                System.out.println(e);
+                System.out.println("e");
             }
         }
     }

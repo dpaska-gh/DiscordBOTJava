@@ -12,7 +12,9 @@ public class HiCommand implements TemplateCommand {
     @Override
     public void executeCommand(MessageCreateEvent event) {
         if (event.getMessageContent().startsWith(FinalValues.PREFIX + FinalValues.HI)) {
-            event.getChannel().sendMessage("Boooooooooooooooook "+event.getMessage().getUserAuthor().get().getMentionTag()+"!");
+
+            if (event.getMessage().getUserAuthor().isPresent())
+                event.getChannel().sendMessage("Boooooooooooooooook " + event.getMessage().getUserAuthor().get().getMentionTag() + "!");
         }
     }
 

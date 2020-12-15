@@ -29,10 +29,13 @@ public class JoinBotCommand implements TemplateCommand {
     public static AudioConnection audioConnection;
     public static Server server1;
     public static User user;
+
     @Override
     public void executeCommand(MessageCreateEvent event) {
+        Server server = null;
 
-        Server server = event.getServer().get();
+        if (event.getServer().isPresent())
+            server = event.getServer().get();
 
         server1 = server;
 
@@ -42,35 +45,36 @@ public class JoinBotCommand implements TemplateCommand {
 
         if (event.getMessage().getContent().contains(FinalValues.PREFIX + FinalValues.PLAY)) {
             ServerVoiceChannel channel;
-            user = event.getMessage().getUserAuthor().get();
+
+            if (event.getMessage().getUserAuthor().isPresent())
+                user = event.getMessage().getUserAuthor().get();
 
             if (user.getConnectedVoiceChannel(server).isEmpty()) {
                 event.getChannel().sendMessage("You must be connected to a voice channel in order to listen to music!");
+            } else {
+
+                channel = user.getConnectedVoiceChannel(server).get();
+
+                //System.out.println(channel.getName());
+                playerManager = new DefaultAudioPlayerManager();
+                playerManager.registerSourceManager(new YoutubeAudioSourceManager());
+                GetYoutubeURL getURL = new GetYoutubeURL();
+
+                AudioSource source = new LavaplayerAudioSource(api, PLAYER);
+
+                if (server.getAudioConnection().isEmpty()) {
+                    channel.connect().thenAccept(audioConnection -> {
+                        audioConnection.setAudioSource(source);
+                        JoinBotCommand.audioConnection = audioConnection;
+                    });
+                }
+
+                playerManager.loadItem("ytsearch: " + getURL.getResult(event), new FunctionalResultHandler(null, audioPlaylist -> {
+                    trackScheduler.queue(audioPlaylist.getTracks().get(0));
+                    event.getChannel().sendMessage(BotEmbeds.createMusicEmbed(audioPlaylist.getTracks().get(0)));
+                }, null, null));
+
             }
-
-            channel = user.getConnectedVoiceChannel(server).get();
-
-            //System.out.println(channel.getName());
-            playerManager = new DefaultAudioPlayerManager();
-            playerManager.registerSourceManager(new YoutubeAudioSourceManager());
-            GetYoutubeURL getURL = new GetYoutubeURL();
-
-            AudioSource source = new LavaplayerAudioSource(api, PLAYER);
-
-            if (server.getAudioConnection().isEmpty()) {
-                channel.connect().thenAccept(audioConnection -> {
-                    audioConnection.setAudioSource(source);
-                    JoinBotCommand.audioConnection = audioConnection;
-                });
-            }
-
-            playerManager.loadItem("ytsearch: " + getURL.getResult(event), new FunctionalResultHandler(null, audioPlaylist -> {
-                trackScheduler.queue(audioPlaylist.getTracks().get(0));
-                event.getChannel().sendMessage(BotEmbeds.createMusicEmbed(audioPlaylist.getTracks().get(0)));
-                //event.getChannel().sendMessage(String.format("Added to queue: **%s**", audioPlaylist.getTracks().get(trackScheduler.queue.size()).getInfo().title));
-            }, null, null));
-
-
         }
 
 

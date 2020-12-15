@@ -2,7 +2,6 @@ package discord.bot.commands;
 
 import discord.bot.Main;
 import discord.bot.commands.finals.FinalValues;
-import org.javacord.api.entity.message.Message;
 import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.util.Collections;
@@ -16,7 +15,6 @@ public class SetCommand implements TemplateCommand {
         SortedMap<String, TemplateCommand> commands = Main.setCommands();
 
         if (event.getMessageContent().contains(FinalValues.PREFIX + FinalValues.SET)) {
-            Message message = event.getMessage();
             String messageContent = event.getMessageContent();
             String[] split = messageContent.split(" ");
             if (split.length == 3) {
