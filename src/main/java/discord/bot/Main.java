@@ -38,6 +38,7 @@ public class Main {
         commands.put(FinalValues.getPREFIX() + FinalValues.QUEUE, new QueueCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.SET, new SetCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.HI, new HiCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.CLEAR, new ClearCommand());
         return commands;
     }
 

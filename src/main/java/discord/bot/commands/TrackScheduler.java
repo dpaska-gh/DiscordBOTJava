@@ -4,18 +4,19 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import discord.bot.Main;
 import discord.bot.commands.finals.BotEmbeds;
-import org.javacord.api.audio.AudioConnection;
-import org.javacord.api.entity.channel.ServerTextChannel;
-import org.javacord.api.entity.server.Server;
+import org.javacord.api.util.concurrent.ThreadPool;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
     public final BlockingQueue<AudioTrack> queue;
+    public static boolean isStarted;
 
     /**
      * @param player The audio player this scheduler uses
@@ -46,40 +47,46 @@ public class TrackScheduler extends AudioEventAdapter {
         // Start the next track, regardless of if something is already playing or not. In case queue was empty, we are
         // giving null to startTrack, which is a valid argument and will simply stop the player.
         player.startTrack(queue.poll(), false);
+
+    }
+
+    @Override
+    public void onTrackStart(AudioPlayer player, AudioTrack track) {
+        isStarted = true;
     }
 
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
-
         // Only start the next track if the end reason is suitable for it (FINISHED or LOAD_FAILED)
         if (endReason.mayStartNext) {
-            nextTrack();
+            try {
+                nextTrack();
+                ThreadPool threadPool = Main.api.getThreadPool();
+                ScheduledExecutorService a = threadPool.getScheduler();
+                a.schedule(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (queue.isEmpty()) {
+                            if (!isStarted) {
+                                JoinBotCommand.server1.getSystemChannel().get().sendMessage(BotEmbeds.musicDisconnectEmbed());
+                                JoinBotCommand.audioConnection.close();
+                            }
+                        }
+                    }
+                }, 30, TimeUnit.SECONDS);
+
+            } catch (NullPointerException ignored) {
+
+            }
+
+            if (queue.isEmpty())
+                isStarted = false;
+
         }
 
         if (endReason.mayStartNext && queue.isEmpty()) {
 
-            try {
-
-                if (JoinBotCommand.server1.getAudioConnection().isPresent()) {
-
-                    AudioConnection connection = JoinBotCommand.audioConnection;
-                    try {
-                        TimeUnit.SECONDS.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    connection.close();
-                    Server server = connection.getServer();
-                    ServerTextChannel systemChannel = server.getSystemChannel().get();
-                    systemChannel.sendMessage(BotEmbeds.musicDisconnectEmbed());
-
-                }
-
-            } catch (NullPointerException ignored) {
-            }
 
         }
-
     }
 }

@@ -154,6 +154,14 @@ public class FinalValues {
         FinalValues.HI = HI;
     }
 
+    public static String getCLEAR() {
+        return CLEAR;
+    }
+
+    public static void setCLEAR(String CLEAR) {
+        FinalValues.CLEAR = CLEAR;
+    }
+
     public static String HI = "bok";
 
     public static String PREFIX = "!";
@@ -193,6 +201,8 @@ public class FinalValues {
     public static String QUEUE = "q";
 
     public static String TEMPDEFAULT = "Temporary Channel";
+
+    public static String CLEAR = "clear";
 
 
 }

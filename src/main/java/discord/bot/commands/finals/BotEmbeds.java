@@ -27,6 +27,21 @@ public class BotEmbeds {
         Orianna.setDefaultRegion(Region.EUROPE_NORTH_EAST);
         Summoner summoner = Orianna.summonerNamed(summonerName).get();
         ProfileIcon profileIcon = summoner.getProfileIcon();
+        String extension;
+        switch (Integer.parseInt(placement.substring(placement.length() - 1))) {
+            case 1:
+                extension = "st";
+                break;
+            case 2:
+                extension = "nd";
+                break;
+            case 3:
+                extension = "rd";
+                break;
+            default:
+                extension = "th";
+                break;
+        }
 
         return new EmbedBuilder()
                 .setTitle("**TFT Profile of:** " + summonerName)
@@ -34,7 +49,7 @@ public class BotEmbeds {
                 .addField("Losses", losses)
                 .addField("Wins", wins)
                 .addField("Winrate", wr.toString() + "%")
-                .addField("Last game he played, " + summonerName + " placed", placement)
+                .addField("Last game he played, " + summonerName + " placed", placement + extension)
                 .setThumbnail(profileIcon.getImage().getURL());
     }
 
@@ -45,7 +60,7 @@ public class BotEmbeds {
         AtomicInteger i = new AtomicInteger();
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(String.format(("**Now playing: %s** \n"), JoinBotCommand.PLAYER.getPlayingTrack().getInfo().title));
-        JoinBotCommand.trackScheduler.queue.forEach(elements -> {
+        queue.forEach(elements -> {
             i.getAndIncrement();
             stringBuilder.append(String.format("**%s.** %s \n", i.toString(), elements.getInfo().title));
         });
@@ -76,5 +91,12 @@ public class BotEmbeds {
                 .setDescription(catFact);
     }
 
+    public static EmbedBuilder skipMusicEmbed(AudioTrack track) {
+        return new EmbedBuilder()
+                .setTitle("Now playing:")
+                .setDescription(track.getInfo().title)
+                .setThumbnail("https://img.youtube.com/vi/" + track.getInfo().identifier + "/0.jpg")
+                .addField("URL", track.getInfo().uri);
+    }
 
 }

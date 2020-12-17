@@ -50,15 +50,19 @@ public class TftCommand implements TemplateCommand {
         printData(event, "sar der rot");
     }
 
-
+    /**
+     * @param event Event event equals to the event the listener is setup for (here, MessageCreate)
+     * @param s     String s equals to the summoner name of the user we are searching for.
+     */
     private static void printData(MessageCreateEvent event, String s) {
         try {
             if (s.split(" ").length > 1) {
                 s = String.join("%20", s.split(" "));
             }
-
-            // this opens the url to get summoner name.
-            // summoner name, puuid related json parsing
+/*
+           this opens the url to get summoner name.
+           summoner name, puuid related json parsing
+ */
             URL summonerName = new URL
                     ("https://eun1.api.riotgames.com/tft/summoner/v1/summoners/by-name/" + s + "?api_key=" + ApiKey.riotApiKey);
             URLConnection name = summonerName.openConnection();
