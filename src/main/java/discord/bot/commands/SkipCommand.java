@@ -23,10 +23,15 @@ public class SkipCommand implements TemplateCommand {
             ServerVoiceChannel channel = JoinBotCommand.audioConnection.getChannel();
             Server server = event.getServer().get();
             String[] split = event.getMessageContent().split(" ");
+
             if (user.isConnected(channel)) {
 
                 if (bot.isConnected(channel) && split.length == 1) {
-                    event.getChannel().sendMessage("The track has been skipped.");
+                    if (JoinBotCommand.trackScheduler.queue.isEmpty() && TrackScheduler.isStarted)
+                        event.getChannel().sendMessage("The track has been skipped.");
+                    else {
+                        event.getChannel().sendMessage("Nothing to skip!");
+                    }
                 }
 
                 if (JoinBotCommand.trackScheduler.queue.size() == 0 && bot.isConnected(channel) && TrackScheduler.isStarted) {
@@ -35,6 +40,8 @@ public class SkipCommand implements TemplateCommand {
 
                 if (split.length == 1) {
                     JoinBotCommand.trackScheduler.nextTrack();
+                    if (JoinBotCommand.trackScheduler.queue.isEmpty() && !TrackScheduler.isStarted)
+                        JoinBotCommand.PLAYER.destroy();
                 } else if (split.length == 2) {
                     try {
                         Integer num = Integer.parseInt(split[1]);
@@ -60,10 +67,9 @@ public class SkipCommand implements TemplateCommand {
             } else if (!user.isConnected(channel)) {
                 event.getChannel().sendMessage("You have to be connected to a channel to use this command");
             }
-
+        }
 
         }
-    }
 
     @Override
     public String getCommandName() {

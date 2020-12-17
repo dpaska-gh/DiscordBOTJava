@@ -66,7 +66,7 @@ public class Main {
         });
 
         UserJoinServer.executeCommand();
-        DisconnectOnFinish.onFinish();
+        //DisconnectOnFinish.onFinish();
         NewMemberListener.executeCommand();
     }
 

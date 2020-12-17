@@ -52,7 +52,9 @@ public class TrackScheduler extends AudioEventAdapter {
 
     @Override
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
+
         isStarted = true;
+
     }
 
     @Override
@@ -71,6 +73,7 @@ public class TrackScheduler extends AudioEventAdapter {
                                 JoinBotCommand.server1.getSystemChannel().get().sendMessage(BotEmbeds.musicDisconnectEmbed());
                                 JoinBotCommand.audioConnection.close();
                             }
+
                         }
                     }
                 }, 30, TimeUnit.SECONDS);
@@ -84,9 +87,5 @@ public class TrackScheduler extends AudioEventAdapter {
 
         }
 
-        if (endReason.mayStartNext && queue.isEmpty()) {
-
-
-        }
     }
 }
