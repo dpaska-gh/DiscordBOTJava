@@ -30,7 +30,8 @@ public class SkipCommand implements TemplateCommand {
                     if (JoinBotCommand.trackScheduler.queue.isEmpty() && TrackScheduler.isStarted)
                         event.getChannel().sendMessage("The track has been skipped.");
                     else {
-                        event.getChannel().sendMessage("Nothing to skip!");
+                        if (JoinBotCommand.trackScheduler.queue.isEmpty())
+                            event.getChannel().sendMessage("Nothing to skip!");
                     }
                 }
 
