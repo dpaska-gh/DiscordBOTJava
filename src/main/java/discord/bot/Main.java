@@ -73,7 +73,6 @@ public class Main {
         });
 
         UserJoinServer.executeCommand();
-        //DisconnectOnFinish.onFinish();
         NewMemberListener.executeCommand();
     }
 
