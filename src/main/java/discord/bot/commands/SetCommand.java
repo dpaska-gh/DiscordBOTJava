@@ -60,9 +60,11 @@ public class SetCommand implements TemplateCommand {
                         FinalValues.setCLEAR(split[2]);
                     } else if (split[1].equalsIgnoreCase(FinalValues.getCOVID())) {
                         FinalValues.setCOVID(split[2]);
+                    } else if (split[1].equalsIgnoreCase(FinalValues.getNASA())) {
+                        FinalValues.setNASA(split[2]);
                     }
                     event.getChannel().sendMessage(split[1].toUpperCase(Locale.ROOT) + " changed to " + split[2]);
-                } else if (split[1].equalsIgnoreCase("timeout")) {
+                } else if (split[1].equalsIgnoreCase(FinalValues.getTIMEOUTCALL())) {
                     FinalValues.setTIMEOUT(Integer.parseInt(split[2]));
                     event.getChannel().sendMessage(split[1].toUpperCase(Locale.ROOT) + " changed to " + split[2]);
                 } else if (split[1].equalsIgnoreCase(FinalValues.getPREFIX())) {

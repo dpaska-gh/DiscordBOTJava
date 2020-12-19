@@ -178,6 +178,14 @@ public class FinalValues {
         FinalValues.TIMEOUT = TIMEOUT;
     }
 
+    public static String getNASA() {
+        return NASA;
+    }
+
+    public static void setNASA(String NASA) {
+        FinalValues.NASA = NASA;
+    }
+
     public static String HI = "bok";
 
     public static String PREFIX = "!";
