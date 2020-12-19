@@ -5,6 +5,7 @@ import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -39,6 +40,7 @@ public class Main {
         commands.put(FinalValues.getPREFIX() + FinalValues.SET, new SetCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.HI, new HiCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.CLEAR, new ClearCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.COVID, new CovidCommand());
         return commands;
     }
 
@@ -59,7 +61,7 @@ public class Main {
                         comm = setCommands();
                         comm.get(split[0]).executeCommand(event);
                     }
-            } catch (NullPointerException ignored) {
+            } catch (NullPointerException | IOException | InterruptedException ignored) {
 
             }
             FifiMudrostiListener.executeFifiMudrosti(event);

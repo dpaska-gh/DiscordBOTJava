@@ -162,6 +162,14 @@ public class FinalValues {
         FinalValues.CLEAR = CLEAR;
     }
 
+    public static String getCOVID() {
+        return COVID;
+    }
+
+    public static void setCOVID(String COVID) {
+        FinalValues.COVID = COVID;
+    }
+
     public static String HI = "bok";
 
     public static String PREFIX = "!";
@@ -203,6 +211,8 @@ public class FinalValues {
     public static String TEMPDEFAULT = "Temporary Channel";
 
     public static String CLEAR = "clear";
+
+    public static String COVID = "covid";
 
 
 }

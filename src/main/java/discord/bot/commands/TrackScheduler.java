@@ -54,38 +54,41 @@ public class TrackScheduler extends AudioEventAdapter {
     public void onTrackStart(AudioPlayer player, AudioTrack track) {
 
         isStarted = true;
+        System.out.println(isStarted);
 
     }
 
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         // Only start the next track if the end reason is suitable for it (FINISHED or LOAD_FAILED)
-        if (endReason.mayStartNext) {
+
+        if (queue.size() == 0) {
             try {
-                nextTrack();
+                isStarted = false;
+                System.out.println(isStarted);
                 ThreadPool threadPool = Main.api.getThreadPool();
                 ScheduledExecutorService a = threadPool.getScheduler();
                 a.schedule(new Runnable() {
                     @Override
                     public void run() {
-                        if (queue.isEmpty()) {
-                            if (!isStarted) {
-                                JoinBotCommand.server1.getSystemChannel().get().sendMessage(BotEmbeds.musicDisconnectEmbed());
-                                JoinBotCommand.audioConnection.close();
-                            }
-
+                        if (!isStarted) {
+                            JoinBotCommand.server1.getSystemChannel().get().sendMessage(BotEmbeds.musicDisconnectEmbed());
+                            JoinBotCommand.audioConnection.close();
                         }
                     }
-                }, 30, TimeUnit.SECONDS);
+                }, 10, TimeUnit.SECONDS);
+
 
             } catch (NullPointerException ignored) {
 
             }
 
-            if (queue.isEmpty())
-                isStarted = false;
-
+        } else if (endReason.mayStartNext) {
+            nextTrack();
+            System.out.println(isStarted);
+            isStarted = false;
         }
+
 
     }
 }

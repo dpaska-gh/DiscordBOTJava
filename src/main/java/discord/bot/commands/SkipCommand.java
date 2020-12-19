@@ -36,7 +36,7 @@ public class SkipCommand implements TemplateCommand {
                 }
 
                 if (JoinBotCommand.trackScheduler.queue.size() == 0 && bot.isConnected(channel) && TrackScheduler.isStarted) {
-                    DisconnectOnFinish.onFinish();
+                    //DisconnectOnFinish.onFinish();
                 }
 
                 if (split.length == 1) {
