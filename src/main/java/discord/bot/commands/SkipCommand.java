@@ -4,7 +4,6 @@ import discord.bot.Main;
 import discord.bot.commands.finals.BotEmbeds;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.entity.channel.ServerVoiceChannel;
-import org.javacord.api.entity.server.Server;
 import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 
@@ -21,7 +20,6 @@ public class SkipCommand implements TemplateCommand {
             User bot = Main.api.getYourself();
             User user = event.getMessageAuthor().asUser().get();
             ServerVoiceChannel channel = JoinBotCommand.audioConnection.getChannel();
-            Server server = event.getServer().get();
             String[] split = event.getMessageContent().split(" ");
 
             if (user.isConnected(channel)) {
@@ -29,9 +27,8 @@ public class SkipCommand implements TemplateCommand {
                 if (bot.isConnected(channel) && split.length == 1) {
                     if (JoinBotCommand.trackScheduler.queue.isEmpty() && TrackScheduler.isStarted)
                         event.getChannel().sendMessage("The track has been skipped.");
-                    else {
-                        if (JoinBotCommand.trackScheduler.queue.isEmpty())
-                            event.getChannel().sendMessage("Nothing to skip!");
+                    else if (JoinBotCommand.trackScheduler.queue.isEmpty() && !TrackScheduler.isStarted) {
+                        event.getChannel().sendMessage("Nothing to skip!");
                     }
                 }
 

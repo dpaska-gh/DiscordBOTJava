@@ -54,7 +54,7 @@ public class SetCommand implements TemplateCommand {
                         FinalValues.setQUEUE(split[2]);
                     } else if (split[1].equalsIgnoreCase(FinalValues.getSILENCECOMMAND())) {
                         FinalValues.setSILENCECOMMAND(split[2]);
-                    }else if (split[1].equalsIgnoreCase(FinalValues.getHI())) {
+                    } else if (split[1].equalsIgnoreCase(FinalValues.getHI())) {
                         FinalValues.setHI(split[2]);
                     } else if (split[1].equalsIgnoreCase(FinalValues.getCLEAR())) {
                         FinalValues.setCLEAR(split[2]);
@@ -62,11 +62,15 @@ public class SetCommand implements TemplateCommand {
                         FinalValues.setCOVID(split[2]);
                     }
                     event.getChannel().sendMessage(split[1].toUpperCase(Locale.ROOT) + " changed to " + split[2]);
+                } else if (split[1].equalsIgnoreCase("timeout")) {
+                    FinalValues.setTIMEOUT(Integer.parseInt(split[2]));
+                    event.getChannel().sendMessage(split[1].toUpperCase(Locale.ROOT) + " changed to " + split[2]);
                 } else if (split[1].equalsIgnoreCase(FinalValues.getPREFIX())) {
                     FinalValues.setPREFIX(split[2]);
                     event.getChannel().sendMessage(split[1].toUpperCase(Locale.ROOT) + " changed to " + split[2]);
                 } else event.getChannel().sendMessage("Unavailable command.");
             } else event.getChannel().sendMessage("Too many arguments");
+
         }
     }
 

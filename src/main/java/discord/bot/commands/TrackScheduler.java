@@ -6,6 +6,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import discord.bot.Main;
 import discord.bot.commands.finals.BotEmbeds;
+import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.util.concurrent.ThreadPool;
 
 import java.util.concurrent.BlockingQueue;
@@ -71,12 +72,14 @@ public class TrackScheduler extends AudioEventAdapter {
                 a.schedule(new Runnable() {
                     @Override
                     public void run() {
+
                         if (!isStarted) {
                             JoinBotCommand.server1.getSystemChannel().get().sendMessage(BotEmbeds.musicDisconnectEmbed());
                             JoinBotCommand.audioConnection.close();
                         }
+
                     }
-                }, 10, TimeUnit.SECONDS);
+                }, FinalValues.TIMEOUT, TimeUnit.SECONDS);
 
 
             } catch (NullPointerException ignored) {

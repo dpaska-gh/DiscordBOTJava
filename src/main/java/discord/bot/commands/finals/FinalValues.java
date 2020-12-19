@@ -170,6 +170,14 @@ public class FinalValues {
         FinalValues.COVID = COVID;
     }
 
+    public static String getTIMEOUTCALL() {
+        return TIMEOUTCALL;
+    }
+
+    public static void setTIMEOUT(int TIMEOUT) {
+        FinalValues.TIMEOUT = TIMEOUT;
+    }
+
     public static String HI = "bok";
 
     public static String PREFIX = "!";
@@ -214,5 +222,10 @@ public class FinalValues {
 
     public static String COVID = "covid";
 
+    public static Integer TIMEOUT = 30;
+
+    public static String TIMEOUTCALL = "timeout";
+
+    public static String NASA = "nasa";
 
 }

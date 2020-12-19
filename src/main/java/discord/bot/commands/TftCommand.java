@@ -23,6 +23,7 @@ public class TftCommand implements TemplateCommand {
 
     @Override
     public void executeCommand(MessageCreateEvent event) {
+
         String message = event.getMessageContent();
         String[] split = message.split(" ");
         if (split[0].equalsIgnoreCase(FinalValues.PREFIX + FinalValues.TFTCOMMAND)) {
@@ -66,11 +67,12 @@ public class TftCommand implements TemplateCommand {
             URL summonerName = new URL
                     ("https://eun1.api.riotgames.com/tft/summoner/v1/summoners/by-name/" + s + "?api_key=" + ApiKey.riotApiKey);
             URLConnection name = summonerName.openConnection();
-            //System.out.println(name.toString());
             BufferedReader in = new BufferedReader(new InputStreamReader(name.getInputStream()));
             JsonObject jsonObject = (JsonObject) JsonParser.parseReader(in);
             JsonElement id = jsonObject.get("id");
             JsonElement puuid = jsonObject.get("puuid");
+            JsonElement profileIconId = jsonObject.get("profileIconId");
+
 
             //this url gets lp and other useless facts
             URL url = new URL
@@ -91,7 +93,7 @@ public class TftCommand implements TemplateCommand {
 
             //gets last match as string from array
             String lastMatch = arraypuuid.get(0).getAsString();
-
+            //System.out.println(lastMatch);
             //opens url to last match info
             URL lastMatchPlacement = new URL("https://europe.api.riotgames.com/tft/match/v1/matches/" + lastMatch.replace("\"", "") + "?api_key=" + ApiKey.riotApiKey);
             URLConnection lastMatchPlacementConnection = lastMatchPlacement.openConnection();
@@ -119,6 +121,7 @@ public class TftCommand implements TemplateCommand {
             JsonObject aObject = a.get();
 
 
+
             //System.out.println(request.toString());
             String sN = wins.get("summonerName").getAsString();
             String tier = wins.get("tier").getAsString();
@@ -127,8 +130,9 @@ public class TftCommand implements TemplateCommand {
             String w = wins.get("wins").getAsString();
             String l = wins.get("losses").getAsString();
             String placement = aObject.get("placement").getAsString();
+            String profileIconIds = profileIconId.toString();
             Float winRate = (Float.parseFloat(w) * 100) / ((Float.parseFloat(l)) + Float.parseFloat(w));
-
+            //System.out.println(profileIconIds);
             /*
             String sb = wins.get("summonerName").getAsString() + "\n" +
                     wins.get("tier").getAsString() + "   " + wins.get("rank").getAsString() + "   " + wins.get("leaguePoints").getAsString() + "lp\n" +
@@ -136,7 +140,7 @@ public class TftCommand implements TemplateCommand {
                     Float.parseFloat(wins.get("wins").getAsString()) * 100 / (Float.parseFloat(wins.get("losses").getAsString()) + Float.parseFloat(wins.get("wins").getAsString())) + "% winrate\n";
              */
 
-            EmbedBuilder tftEmbed = BotEmbeds.createTFTEmbed(placement, sN, tier, rank, LP, w, winRate, l);
+            EmbedBuilder tftEmbed = BotEmbeds.createTFTEmbed(profileIconIds, placement, sN, tier, rank, LP, w, winRate, l);
             event.getChannel().sendMessage(tftEmbed);
 
         } catch (IOException e) {

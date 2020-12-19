@@ -4,6 +4,7 @@ import discord.bot.commands.*;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
+import org.javacord.api.util.logging.FallbackLoggerConfiguration;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -41,6 +42,7 @@ public class Main {
         commands.put(FinalValues.getPREFIX() + FinalValues.HI, new HiCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.CLEAR, new ClearCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.COVID, new CovidCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.NASA, new NasaPlanetCommand());
         return commands;
     }
 
@@ -49,8 +51,11 @@ public class Main {
     }
 
     public static void main(String[] args) {
+// Enable debug logging
+        FallbackLoggerConfiguration.setDebug(false);
 
-
+// Enable trace logging
+        FallbackLoggerConfiguration.setTrace(false);
 
         api.addMessageCreateListener(event -> {
             try {

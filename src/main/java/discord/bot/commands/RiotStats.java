@@ -6,7 +6,6 @@ import com.merakianalytics.orianna.types.core.staticdata.Champion;
 import com.merakianalytics.orianna.types.core.staticdata.Champions;
 import com.merakianalytics.orianna.types.core.staticdata.ProfileIcon;
 import com.merakianalytics.orianna.types.core.summoner.Summoner;
-import discord.bot.ApiKey;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.event.message.MessageCreateEvent;
 
@@ -21,7 +20,7 @@ public class RiotStats implements TemplateCommand {
         String[] split = messageContent.split(" ");
 
         if (split[0].equalsIgnoreCase(FinalValues.PREFIX + FinalValues.RIOTSTATS)) {
-            Orianna.setRiotAPIKey(ApiKey.riotApiKey);
+
             Orianna.setDefaultRegion(Region.EUROPE_NORTH_EAST);
             Summoner summoner = Orianna.summonerNamed(split[1]).get();
             profileIcon = summoner.getProfileIcon();

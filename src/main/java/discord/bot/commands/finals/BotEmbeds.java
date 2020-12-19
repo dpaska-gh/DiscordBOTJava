@@ -1,18 +1,19 @@
 package discord.bot.commands.finals;
 
-import com.merakianalytics.orianna.Orianna;
-import com.merakianalytics.orianna.types.common.Region;
-import com.merakianalytics.orianna.types.core.staticdata.ProfileIcon;
-import com.merakianalytics.orianna.types.core.summoner.Summoner;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import discord.bot.ApiKey;
+import discord.bot.Main;
 import discord.bot.commands.JoinBotCommand;
+import discord.bot.commands.TemplateCommand;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
+import org.msgpack.core.annotations.Nullable;
 
+import java.util.Map;
+import java.util.SortedMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class BotEmbeds {
+
     public static EmbedBuilder createMusicEmbed(AudioTrack track) {
         return new EmbedBuilder()
                 .setTitle("Added to queue")
@@ -22,11 +23,8 @@ public class BotEmbeds {
                 .setFooter("Requested by: " + JoinBotCommand.user.getName());
     }
 
-    public static EmbedBuilder createTFTEmbed(String placement, String summonerName, String tier, String rank, String leaguePoints, String wins, Float wr, String losses) {
-        Orianna.setRiotAPIKey(ApiKey.riotApiKey);
-        Orianna.setDefaultRegion(Region.EUROPE_NORTH_EAST);
-        Summoner summoner = Orianna.summonerNamed(summonerName).get();
-        ProfileIcon profileIcon = summoner.getProfileIcon();
+    public static EmbedBuilder createTFTEmbed(String profileIconId, String placement, String summonerName, String tier, String rank, String leaguePoints, String wins, Float wr, String losses) {
+        String version = "10.25.1";
         String extension;
         switch (Integer.parseInt(placement.substring(placement.length() - 1))) {
             case 1:
@@ -42,7 +40,7 @@ public class BotEmbeds {
                 extension = "th";
                 break;
         }
-
+        //System.out.println("https://ddragon.leagueoflegends.com/cdn/" + version + "/img/profileicon/" + profileIconId);
         return new EmbedBuilder()
                 .setTitle("**TFT Profile of:** " + summonerName)
                 .addField("Tier", tier + " " + rank + " - " + leaguePoints + "LP")
@@ -50,7 +48,7 @@ public class BotEmbeds {
                 .addField("Wins", wins)
                 .addField("Winrate", wr.toString() + "%")
                 .addField("Last game he played, " + summonerName + " placed", placement + extension)
-                .setThumbnail(profileIcon.getImage().getURL());
+                .setThumbnail("https://ddragon.leagueoflegends.com/cdn/" + version + "/img/profileicon/" + profileIconId + ".png");
     }
 
     public static EmbedBuilder musicQueueEmbed(BlockingQueue<AudioTrack> queue) {
@@ -99,4 +97,37 @@ public class BotEmbeds {
                 .addField("URL", track.getInfo().uri);
     }
 
+    public static EmbedBuilder helpEmbed(boolean samohelp, @Nullable String command) {
+        SortedMap<String, TemplateCommand> commands = Main.setCommands();
+        if (samohelp) {
+            EmbedBuilder helpEmbed = new EmbedBuilder().setTitle("List of all available commands:")
+                    .addField("Current bot timeout: ", FinalValues.TIMEOUT.toString())
+                    .addField("Current prefix: ", FinalValues.PREFIX);
+            for (Map.Entry<String, TemplateCommand> commandName : commands.entrySet()) {
+                helpEmbed.addInlineField(commandName.getKey(), commandName.getValue().getCommandDescription().toString().replace("[", "\"").replace("]", "\""));
+            }
+            return helpEmbed;
+        } else {
+            EmbedBuilder helpEmbed = new EmbedBuilder().setTitle("Help command: " + command);
+            if (commands.containsKey(command)) {
+                helpEmbed.addField(commands.get(command).getCommandName(), commands.get(command).getCommandDescription().toString().replace("[", "").replace("]", ""));
+                System.out.println(command);
+                return helpEmbed;
+            } else if (commands.containsKey(FinalValues.PREFIX + command)) {
+                System.out.println(command);
+                StringBuilder sb = new StringBuilder(command);
+                sb.insert(0, FinalValues.getPREFIX());
+                command = sb.toString();
+                helpEmbed.addField(commands.get(command).getCommandName(), commands.get(command).getCommandDescription().toString().replace("[", "").replace("]", ""));
+                return helpEmbed;
+            } else {
+                helpEmbed.setDescription("Unknown command");
+                return helpEmbed;
+            }
+
+        }
+
+    }
+
 }
+

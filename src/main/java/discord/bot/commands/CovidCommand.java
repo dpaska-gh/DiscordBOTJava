@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Collections;
 import java.util.List;
 
 public class CovidCommand implements TemplateCommand {
@@ -38,11 +39,11 @@ public class CovidCommand implements TemplateCommand {
 
     @Override
     public String getCommandName() {
-        return null;
+        return FinalValues.PREFIX + FinalValues.COVID;
     }
 
     @Override
     public List<String> getCommandDescription() {
-        return null;
+        return Collections.singletonList("Current covid stats...");
     }
 }
