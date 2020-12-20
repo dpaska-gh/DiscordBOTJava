@@ -16,22 +16,29 @@ public class SilenceCommand implements TemplateCommand {
     public void executeCommand(MessageCreateEvent event) {
 
         if (event.getMessageContent().contains(FinalValues.PREFIX + FinalValues.SILENCECOMMAND)) {
+            Collection<User> userCollection;
             String messageContent = event.getMessageContent();
             Server server = event.getServer().get();
             String[] split = messageContent.split(" ");
-            ServerVoiceChannel voiceChannel = event.getMessageAuthor().getConnectedVoiceChannel().get();
-            Collection<User> userCollection = voiceChannel.getConnectedUsers();
+            ServerVoiceChannel voiceChannel;
 
-            if (split[0].equalsIgnoreCase(FinalValues.PREFIX + FinalValues.SILENCECOMMAND)) {
-                userCollection.forEach(users -> {
-                    if (users.getName().toUpperCase().contains(split[1].toUpperCase())) {
-                        users.mute(server);
+            if (event.getMessageAuthor().getConnectedVoiceChannel().isPresent()) {
+                voiceChannel = event.getMessageAuthor().getConnectedVoiceChannel().get();
+                userCollection = voiceChannel.getConnectedUsers();
+                if (split[0].equalsIgnoreCase(FinalValues.PREFIX + FinalValues.SILENCECOMMAND)) {
+                    userCollection.forEach(users -> {
+                        if (users.getName().toUpperCase().contains(split[1].toUpperCase())) {
+                            users.mute(server);
 
-                        if (users.isMuted(server)) {
-                            users.unmute(server);
+                            if (users.isMuted(server)) {
+                                users.unmute(server);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
+            } else {
+                event.getChannel().sendMessage("You have to be in the same channel as the targeted user.");
             }
 
         }

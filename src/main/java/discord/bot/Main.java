@@ -28,7 +28,8 @@ public class Main {
         commands.put(FinalValues.getPREFIX() + FinalValues.HELPCOMMAND, new HelpCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.PINGCOMMAND, new PongCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.RANDOMMEME, new RadnomMeme());
-        commands.put(FinalValues.getPREFIX() + FinalValues.RIOTSTATS, new RiotStats());
+        //NOT WORKING - RIOT TROLLED US!
+        //commands.put(FinalValues.getPREFIX() + FinalValues.RIOTSTATS, new RiotStats());
         commands.put(FinalValues.getPREFIX() + FinalValues.SILENCECOMMAND, new SilenceCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.TEMPCHANNEL, new TempChannel());
         commands.put(FinalValues.getPREFIX() + FinalValues.TFTCOMMAND, new TftCommand());

@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.SortedMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SetCommand implements TemplateCommand {
     @Override
@@ -15,10 +17,19 @@ public class SetCommand implements TemplateCommand {
         SortedMap<String, TemplateCommand> commands = Main.setCommands();
 
         if (event.getMessageContent().contains(FinalValues.PREFIX + FinalValues.SET)) {
+            Pattern pattern = Pattern.compile("([!-/]|[;-?]|[{-~])");
+
             String messageContent = event.getMessageContent();
             String[] split = messageContent.split(" ");
             if (split.length == 3) {
-                if (commands.get(FinalValues.getPREFIX() + split[1]) != null) {
+                if ((commands.get(FinalValues.getPREFIX() + split[1]) != null) &&
+                        (!commands.containsKey(FinalValues.PREFIX + split[2])) &&
+                        (!split[2].equalsIgnoreCase(FinalValues.PREFIX)) &&
+                        !(split[2].startsWith("http://") ||
+                                split[2].startsWith("https://") ||
+                                split[2].startsWith("ftp://") ||
+                                split[2].startsWith("<") ||
+                                split[2].startsWith("@"))) {
 
                     if (split[1].equalsIgnoreCase(FinalValues.getSET())) {
                         FinalValues.setSET(split[2]);
@@ -36,9 +47,9 @@ public class SetCommand implements TemplateCommand {
                         FinalValues.setCATFACT(split[2]);
                     } else if (split[1].equalsIgnoreCase(FinalValues.getCATIMAGE())) {
                         FinalValues.setCATIMAGE(split[2]);
-                    } else if (split[1].equalsIgnoreCase(FinalValues.getRIOTSTATS())) {
+                    } /*else if (split[1].equalsIgnoreCase(FinalValues.getRIOTSTATS())) {
                         FinalValues.setRIOTSTATS(split[2]);
-                    } else if (split[1].equalsIgnoreCase(FinalValues.getDELETE())) {
+                    }*/ else if (split[1].equalsIgnoreCase(FinalValues.getDELETE())) {
                         FinalValues.setDELETE(split[2]);
                     } else if (split[1].equalsIgnoreCase(FinalValues.getHELPCOMMAND())) {
                         FinalValues.setHELPCOMMAND(split[2]);
@@ -72,9 +83,20 @@ public class SetCommand implements TemplateCommand {
                         event.getChannel().sendMessage(FinalValues.getTIMEOUTCALL().toUpperCase() + " should be greater than 1 second.");
                     }
                 } else if (split[1].equalsIgnoreCase(FinalValues.getPREFIX())) {
-                    FinalValues.setPREFIX(split[2]);
-                    event.getChannel().sendMessage(split[1].toUpperCase(Locale.ROOT) + " changed to " + split[2]);
-                } else event.getChannel().sendMessage("Unavailable command.");
+                    char[] prefixChar = split[2].toCharArray();
+                    Matcher match = pattern.matcher(prefixChar[0] + "");
+                    if (prefixChar.length == 1 && match.find()) {
+                        if (prefixChar[0] == FinalValues.getPREFIX().charAt(0)) {
+                            event.getChannel().sendMessage("You're trying to set the current prefix to the same prefix??");
+                        } else {
+                            FinalValues.setPREFIX(String.valueOf(prefixChar[0]));
+                            event.getChannel().sendMessage(split[1].toUpperCase(Locale.ROOT) + " changed to " + split[2]);
+                        }
+                    } else {
+                        event.getChannel().sendMessage("Prefix can be only one symbol and cannot be alphabetic/number.");
+                    }
+                } else
+                    event.getChannel().sendMessage("Unavailable command or you're trying to set the command to another command/URL");
             } else event.getChannel().sendMessage("Too many arguments");
 
         }
@@ -87,6 +109,6 @@ public class SetCommand implements TemplateCommand {
 
     @Override
     public List<String> getCommandDescription() {
-        return Collections.singletonList("Sets the aliases.");
+        return Collections.singletonList("Sets the aliases of commands and changes bot by calling timeout as 1st argument");
     }
 }
