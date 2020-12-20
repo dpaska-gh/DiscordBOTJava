@@ -65,8 +65,12 @@ public class SetCommand implements TemplateCommand {
                     }
                     event.getChannel().sendMessage(split[1].toUpperCase(Locale.ROOT) + " changed to " + split[2]);
                 } else if (split[1].equalsIgnoreCase(FinalValues.getTIMEOUTCALL())) {
-                    FinalValues.setTIMEOUT(Integer.parseInt(split[2]));
-                    event.getChannel().sendMessage(split[1].toUpperCase(Locale.ROOT) + " changed to " + split[2]);
+                    if (Integer.parseInt(split[2]) > 1) {
+                        FinalValues.setTIMEOUT(Integer.parseInt(split[2]));
+                        event.getChannel().sendMessage(split[1].toUpperCase(Locale.ROOT) + " changed to " + split[2]);
+                    } else {
+                        event.getChannel().sendMessage(FinalValues.getTIMEOUTCALL().toUpperCase() + " should be greater than 1 second.");
+                    }
                 } else if (split[1].equalsIgnoreCase(FinalValues.getPREFIX())) {
                     FinalValues.setPREFIX(split[2]);
                     event.getChannel().sendMessage(split[1].toUpperCase(Locale.ROOT) + " changed to " + split[2]);

@@ -115,6 +115,7 @@ public class BotEmbeds {
                 return helpEmbed;
             } else if (commands.containsKey(FinalValues.PREFIX + command)) {
                 System.out.println(command);
+                helpEmbed.setTitle("Help command: " + FinalValues.PREFIX + command);
                 StringBuilder sb = new StringBuilder(command);
                 sb.insert(0, FinalValues.getPREFIX());
                 command = sb.toString();
