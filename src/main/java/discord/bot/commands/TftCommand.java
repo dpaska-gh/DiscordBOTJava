@@ -84,7 +84,14 @@ public class TftCommand implements TemplateCommand {
             URLConnection request = url.openConnection();
             BufferedReader inputStream = new BufferedReader(new InputStreamReader(request.getInputStream()));
             JsonArray array = JsonParser.parseReader(inputStream).getAsJsonArray();
-            JsonElement winsElement = array.get(0);
+            JsonElement winsElement = null;
+
+            try {
+                winsElement = array.get(0);
+            } catch (IndexOutOfBoundsException outOfBoundsException) {
+                textChannel.sendMessage("Player didn't play TFT for a long time");
+            }
+            // JsonElement winsElement = array.get(0);
             JsonObject wins = winsElement.getAsJsonObject();
 
             //this url opens the last match the player played
@@ -135,14 +142,15 @@ public class TftCommand implements TemplateCommand {
             String profileIconIds = profileIconId.toString();
             Float winRate = (Float.parseFloat(w) * 100) / ((Float.parseFloat(l)) + Float.parseFloat(w));
             //System.out.println(profileIconIds);
-            /*
-            String sb = wins.get("summonerName").getAsString() + "\n" +
-                    wins.get("tier").getAsString() + "   " + wins.get("rank").getAsString() + "   " + wins.get("leaguePoints").getAsString() + "lp\n" +
-                    wins.get("wins").getAsString() + " wins " +
-                    Float.parseFloat(wins.get("wins").getAsString()) * 100 / (Float.parseFloat(wins.get("losses").getAsString()) + Float.parseFloat(wins.get("wins").getAsString())) + "% winrate\n";
-             */
 
             EmbedBuilder tftEmbed = BotEmbeds.createTFTEmbed(profileIconIds, placement, sN, tier, rank, LP, w, winRate, l);
+            /*
+            String[] dpaskaAccs = {"BogTFTa", "UIMastered Goku", "AsianGamer5", "Milan Stanković", "PeroMain"};
+            if(Arrays.asList(dpaskaAccs).contains(sN))
+            {
+                tftEmbed.setThumbnail("https://i.imgur.com/ttzI0kL.jpg");
+            }
+             */
             textChannel.sendMessage(tftEmbed);
 
         } catch (IOException e) {
