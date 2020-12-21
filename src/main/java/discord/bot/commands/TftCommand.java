@@ -7,6 +7,7 @@ import com.google.gson.JsonParser;
 import discord.bot.ApiKey;
 import discord.bot.commands.finals.BotEmbeds;
 import discord.bot.commands.finals.FinalValues;
+import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 
@@ -25,12 +26,13 @@ public class TftCommand implements TemplateCommand {
     public void executeCommand(MessageCreateEvent event) {
 
         String message = event.getMessageContent();
+        ServerTextChannel textChannel = event.getServerTextChannel().get();
         String[] split = message.split(" ");
         if (split[0].equalsIgnoreCase(FinalValues.PREFIX + FinalValues.TFTCOMMAND)) {
             if (split[1].equalsIgnoreCase("gentlmens"))
-                getGentlemens(event);
+                getGentlemens(textChannel);
             else
-                printData(event, message.replace(FinalValues.PREFIX + FinalValues.TFTCOMMAND + " ", "").trim());
+                printData(textChannel, message.replace(FinalValues.PREFIX + FinalValues.TFTCOMMAND + " ", "").trim());
         }
     }
 
@@ -44,18 +46,18 @@ public class TftCommand implements TemplateCommand {
         return Collections.singletonList("Gets the TFT stats for user.");
     }
 
-    public static void getGentlemens(MessageCreateEvent event) {
-        printData(event, "LukaLegend007");
-        printData(event, "MiqeloS");
-        printData(event, "BogTFTa");
-        printData(event, "sar der rot");
+    public static void getGentlemens(ServerTextChannel textChannel) {
+        printData(textChannel, "LukaLegend007");
+        printData(textChannel, "MiqeloS");
+        printData(textChannel, "BogTFTa");
+        printData(textChannel, "sar der rot");
     }
 
     /**
-     * @param event Event event equals to the event the listener is setup for (here, MessageCreate)
-     * @param s     String s equals to the summoner name of the user we are searching for.
+     * @param textChannel Event event equals to the text channel the event is triggered in
+     * @param s           String s equals to the summoner name of the user we are searching for.
      */
-    private static void printData(MessageCreateEvent event, String s) {
+    public static void printData(ServerTextChannel textChannel, String s) {
         try {
             if (s.split(" ").length > 1) {
                 s = String.join("%20", s.split(" "));
@@ -141,10 +143,10 @@ public class TftCommand implements TemplateCommand {
              */
 
             EmbedBuilder tftEmbed = BotEmbeds.createTFTEmbed(profileIconIds, placement, sN, tier, rank, LP, w, winRate, l);
-            event.getChannel().sendMessage(tftEmbed);
+            textChannel.sendMessage(tftEmbed);
 
         } catch (IOException e) {
-            event.getChannel().sendMessage("Player not found");
+            textChannel.sendMessage("Player not found");
         }
     }
 

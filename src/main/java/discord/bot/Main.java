@@ -9,6 +9,7 @@ import org.javacord.api.util.logging.FallbackLoggerConfiguration;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.SortedMap;
+import java.util.Timer;
 import java.util.TreeMap;
 
 
@@ -57,6 +58,11 @@ public class Main {
 
 // Enable trace logging
         FallbackLoggerConfiguration.setTrace(false);
+
+        //temp
+        Timer time = new Timer();
+        TimedTFT timedTFT = new TimedTFT();
+        time.schedule(timedTFT, 0, 3600000);
 
         api.addMessageCreateListener(event -> {
             try {
