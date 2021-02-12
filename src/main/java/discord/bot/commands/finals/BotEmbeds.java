@@ -7,6 +7,7 @@ import discord.bot.commands.TemplateCommand;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.msgpack.core.annotations.Nullable;
 
+import java.awt.*;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.concurrent.BlockingQueue;
@@ -128,6 +129,58 @@ public class BotEmbeds {
 
         }
 
+    }
+
+    public static EmbedBuilder lichessEmbed(String username,
+                                            String bulletRating,
+                                            String puzzleRating,
+                                            String rapidRating,
+                                            String classicalRating,
+                                            String blitzRating,
+                                            String bulletGames,
+                                            String puzzleGames,
+                                            String rapidGames,
+                                            String classicalGames,
+                                            String blitzGames,
+                                            Boolean onlineStatus,
+                                            boolean bulletProv,
+                                            boolean puzzleProv,
+                                            boolean rapidProv,
+                                            boolean classicalProv,
+                                            boolean blitzProv,
+                                            String timePlayed) {
+
+        EmbedBuilder lichessEmbed = new EmbedBuilder().setTitle("Lichess.org stats for user: " + username).setThumbnail("https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Lichess_Logo.svg/250px-Lichess_Logo.svg.png");
+        if (bulletProv)
+            lichessEmbed.addField("BULLET rating over " + bulletGames + " games.", bulletRating + "?");
+        else
+            lichessEmbed.addField("BULLET rating over " + bulletGames + " games.", bulletRating);
+        if (puzzleProv)
+            lichessEmbed.addField("PUZZLE rating over " + puzzleGames + " games.", puzzleRating + "?");
+        else
+            lichessEmbed.addField("PUZZLE rating over " + puzzleGames + " games.", puzzleRating);
+        if (rapidProv)
+            lichessEmbed.addField("RAPID rating over " + rapidGames + " games.", rapidRating + "?");
+        else
+            lichessEmbed.addField("RAPID rating over " + rapidGames + " games.", rapidRating);
+        if (classicalProv)
+            lichessEmbed.addField("CLASSICAL rating over " + classicalGames + " games.", classicalRating + "?");
+        else
+            lichessEmbed.addField("CLASSICAL rating over " + classicalGames + " games.", classicalRating);
+        if (blitzProv)
+            lichessEmbed.addField("BLITZ rating over " + blitzGames + " games.", blitzRating + "?");
+        else
+            lichessEmbed.addField("BLITZ rating over " + blitzGames + " games.", blitzRating);
+
+        lichessEmbed.setDescription("Total time played: " + timePlayed);
+
+        if (onlineStatus) {
+            lichessEmbed.setFooter("User is currently ONLINE");
+        }
+
+        lichessEmbed.setColor(Color.LIGHT_GRAY);
+
+        return lichessEmbed;
     }
 
 }

@@ -1,5 +1,6 @@
 package discord.bot.commands;
 
+
 import discord.bot.commands.finals.BotEmbeds;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.event.message.MessageCreateEvent;
@@ -13,6 +14,7 @@ public class QueueCommand implements TemplateCommand {
         if (event.getMessageContent().equalsIgnoreCase(FinalValues.PREFIX + FinalValues.QUEUE)) {
 
             event.getChannel().sendMessage(BotEmbeds.musicQueueEmbed(JoinBotCommand.trackScheduler.queue));
+
         }
     }
 

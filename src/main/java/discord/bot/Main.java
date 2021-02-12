@@ -20,8 +20,11 @@ public class Main {
 
     private static SortedMap<String, TemplateCommand> comm;
 
+    @org.jetbrains.annotations.NotNull
     public static SortedMap<String, TemplateCommand> setCommands() {
         //commands.put("!mention", new AtMentionCommand());
+        //NOT WORKING - RIOT TROLLED US!
+        //commands.put(FinalValues.getPREFIX() + FinalValues.RIOTSTATS, new RiotStats());
         SortedMap<String, TemplateCommand> commands = new TreeMap<>();
         commands.put(FinalValues.getPREFIX() + FinalValues.CATFACT, new CatFactCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.CATIMAGE, new CatImage());
@@ -29,8 +32,6 @@ public class Main {
         commands.put(FinalValues.getPREFIX() + FinalValues.HELPCOMMAND, new HelpCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.PINGCOMMAND, new PongCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.RANDOMMEME, new RadnomMeme());
-        //NOT WORKING - RIOT TROLLED US!
-        //commands.put(FinalValues.getPREFIX() + FinalValues.RIOTSTATS, new RiotStats());
         commands.put(FinalValues.getPREFIX() + FinalValues.SILENCECOMMAND, new SilenceCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.TEMPCHANNEL, new TempChannel());
         commands.put(FinalValues.getPREFIX() + FinalValues.TFTCOMMAND, new TftCommand());
@@ -45,6 +46,7 @@ public class Main {
         commands.put(FinalValues.getPREFIX() + FinalValues.CLEAR, new ClearCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.COVID, new CovidCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.NASA, new NasaPlanetCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.LICHESS, new LichessCommand());
         return commands;
     }
 
@@ -58,7 +60,7 @@ public class Main {
 
 // Enable trace logging
         FallbackLoggerConfiguration.setTrace(false);
-
+        api.setMessageCacheSize(10, 60 * 60);
         //temp
         Timer time = new Timer();
         TimedTFT timedTFT = new TimedTFT();

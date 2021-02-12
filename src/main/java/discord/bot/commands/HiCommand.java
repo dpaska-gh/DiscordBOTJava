@@ -11,7 +11,7 @@ public class HiCommand implements TemplateCommand {
 
     @Override
     public void executeCommand(MessageCreateEvent event) {
-        if (event.getMessageContent().startsWith(FinalValues.PREFIX + FinalValues.HI)) {
+        if (event.getMessageContent().equalsIgnoreCase(FinalValues.PREFIX + FinalValues.HI)) {
 
             if (event.getMessage().getUserAuthor().isPresent())
                 event.getChannel().sendMessage("Boooooooooooooooook " + event.getMessage().getUserAuthor().get().getMentionTag() + "!");

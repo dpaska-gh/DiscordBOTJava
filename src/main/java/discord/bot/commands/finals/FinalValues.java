@@ -186,7 +186,25 @@ public class FinalValues {
         FinalValues.NASA = NASA;
     }
 
+    public static String getREMOVE() {
+        return REMOVE;
+    }
+
+    public static void setREMOVE(String REMOVE) {
+        FinalValues.REMOVE = REMOVE;
+    }
+
+    public static String getLICHESS() {
+        return LICHESS;
+    }
+
+    public static void setLICHESS(String LICHESS) {
+        FinalValues.LICHESS = LICHESS;
+    }
+
     public static String HI = "bok";
+
+    public static String LICHESS = "lichess";
 
     public static String PREFIX = "!";
 
@@ -235,5 +253,7 @@ public class FinalValues {
     public static String TIMEOUTCALL = "timeout";
 
     public static String NASA = "nasa";
+
+    public static String REMOVE = "remove";
 
 }

@@ -22,7 +22,7 @@ public class TimedTFT extends TimerTask {
         now = new Date();
         time = LocalTime.now();
         if (time.compareTo(LocalTime.MIDNIGHT.plus(20, HOURS).plus(0, MINUTES)) > 0 && time.compareTo(LocalTime.MIDNIGHT.plus(21, HOURS).plus(0, MINUTES)) < 0) {
-            TftCommand.printData(server.getSystemChannel().get(), "LukaLegend007");
+            TftCommand.printData(systemChannel, "LukaLegend007");
             TftCommand.printData(systemChannel, "MiqeloS");
             TftCommand.printData(systemChannel, "BogTFTa");
             TftCommand.printData(systemChannel, "sar der rot");

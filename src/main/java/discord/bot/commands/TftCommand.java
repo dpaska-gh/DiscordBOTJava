@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -144,13 +145,16 @@ public class TftCommand implements TemplateCommand {
             //System.out.println(profileIconIds);
 
             EmbedBuilder tftEmbed = BotEmbeds.createTFTEmbed(profileIconIds, placement, sN, tier, rank, LP, w, winRate, l);
-            /*
+
             String[] dpaskaAccs = {"BogTFTa", "UIMastered Goku", "AsianGamer5", "Milan Stanković", "PeroMain"};
-            if(Arrays.asList(dpaskaAccs).contains(sN))
-            {
+            String[] mimiAccs = {"MiqeloS"};
+            if (Arrays.asList(mimiAccs).contains(sN)) {
+                tftEmbed.setThumbnail("https://i.imgur.com/y6Mne1I.jpg");
+            }
+            if (Arrays.asList(dpaskaAccs).contains(sN)) {
                 tftEmbed.setThumbnail("https://i.imgur.com/ttzI0kL.jpg");
             }
-             */
+
             textChannel.sendMessage(tftEmbed);
 
         } catch (IOException e) {
