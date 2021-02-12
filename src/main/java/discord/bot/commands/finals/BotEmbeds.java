@@ -8,6 +8,8 @@ import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.msgpack.core.annotations.Nullable;
 
 import java.awt.*;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.concurrent.BlockingQueue;
@@ -148,7 +150,8 @@ public class BotEmbeds {
                                             boolean rapidProv,
                                             boolean classicalProv,
                                             boolean blitzProv,
-                                            String timePlayed) {
+                                            String timePlayed,
+                                            Long lastSeen) {
 
         EmbedBuilder lichessEmbed = new EmbedBuilder().setTitle("Lichess.org stats for user: " + username).setThumbnail("https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Lichess_Logo.svg/250px-Lichess_Logo.svg.png");
         if (bulletProv)
@@ -172,10 +175,14 @@ public class BotEmbeds {
         else
             lichessEmbed.addField("BLITZ rating over " + blitzGames + " games.", blitzRating);
 
-        lichessEmbed.setDescription("Total time played: " + timePlayed);
+        lichessEmbed.setDescription("**Total time played:** " + timePlayed);
 
         if (onlineStatus) {
             lichessEmbed.setFooter("User is currently ONLINE");
+        } else {
+            Date lastSeenDate = new Date(lastSeen);
+            var dateToStr = DateFormat.getDateTimeInstance().format(lastSeenDate);
+            lichessEmbed.setFooter("Last seen on: " + dateToStr);
         }
 
         lichessEmbed.setColor(Color.LIGHT_GRAY);

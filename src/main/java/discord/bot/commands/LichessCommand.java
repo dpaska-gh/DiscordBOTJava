@@ -69,6 +69,7 @@ public class LichessCommand implements TemplateCommand {
                     blitzProv = ratings.get("blitz").getAsJsonObject().get("prov").getAsBoolean();
                 } catch (NullPointerException ignored) {
                 }
+                Long lastSeen = allInfo.get("seenAt").getAsLong();
 
                 event.getChannel().sendMessage(BotEmbeds.lichessEmbed(username, bulletRating,
                         puzzleRating,
@@ -86,7 +87,8 @@ public class LichessCommand implements TemplateCommand {
                         rapidProv,
                         classicalProv,
                         blitzProv,
-                        timePlayed));
+                        timePlayed,
+                        lastSeen));
 
             } else {
                 event.getChannel().sendMessage("Invalid number of arguments");
