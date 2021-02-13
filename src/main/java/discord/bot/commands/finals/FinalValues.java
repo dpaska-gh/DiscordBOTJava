@@ -202,11 +202,21 @@ public class FinalValues {
         FinalValues.LICHESS = LICHESS;
     }
 
+    public static String getFOOTBALL() {
+        return FOOTBALL;
+    }
+
+    public static void setFOOTBALL(String FOOTBALL) {
+        FinalValues.FOOTBALL = FOOTBALL;
+    }
+
     public static String HI = "bok";
+
+    public static String PREFIX = "!";
 
     public static String LICHESS = "lichess";
 
-    public static String PREFIX = "!";
+    public static String FOOTBALL = "football";
 
     public static String SET = "set";
 

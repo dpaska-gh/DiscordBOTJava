@@ -47,6 +47,7 @@ public class Main {
         commands.put(FinalValues.getPREFIX() + FinalValues.COVID, new CovidCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.NASA, new NasaPlanetCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.LICHESS, new LichessCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.FOOTBALL, new FootballCommand());
         return commands;
     }
 
