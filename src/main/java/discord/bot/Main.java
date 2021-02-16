@@ -48,6 +48,7 @@ public class Main {
         commands.put(FinalValues.getPREFIX() + FinalValues.NASA, new NasaPlanetCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.LICHESS, new LichessCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.FOOTBALL, new FootballCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.REMOVE, new RemoveCommand());
         return commands;
     }
 

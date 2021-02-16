@@ -73,7 +73,7 @@ public class FinalValues {
     public static void setCATIMAGE(String CATIMAGE) {
         FinalValues.CATIMAGE = CATIMAGE;
     }
-
+/*
     public static String getRIOTSTATS() {
         return RIOTSTATS;
     }
@@ -81,6 +81,7 @@ public class FinalValues {
     public static void setRIOTSTATS(String RIOTSTATS) {
         FinalValues.RIOTSTATS = RIOTSTATS;
     }
+*/
 
     public static String getDELETE() {
         return DELETE;
@@ -212,7 +213,7 @@ public class FinalValues {
 
     public static String HI = "bok";
 
-    public static String PREFIX = "!";
+    public static String PREFIX = "?";
 
     public static String LICHESS = "lichess";
 

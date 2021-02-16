@@ -18,9 +18,10 @@ public class SetCommand implements TemplateCommand {
 
         if (event.getMessageContent().contains(FinalValues.PREFIX + FinalValues.SET)) {
             Pattern pattern = Pattern.compile("([!-/]|[;-?]|[{-~])");
-
+            Pattern pattern2 = Pattern.compile("([A-Z|a-z])\\w+");
             String messageContent = event.getMessageContent();
             String[] split = messageContent.split(" ");
+            Matcher match2 = pattern2.matcher(split[2]);
             if (split.length == 3) {
                 if ((commands.get(FinalValues.getPREFIX() + split[1]) != null) &&
                         (!commands.containsKey(FinalValues.PREFIX + split[2])) &&
@@ -29,7 +30,8 @@ public class SetCommand implements TemplateCommand {
                                 split[2].startsWith("https://") ||
                                 split[2].startsWith("ftp://") ||
                                 split[2].startsWith("<") ||
-                                split[2].startsWith("@"))) {
+                                split[2].startsWith("@"))
+                        && match2.find()) {
 
                     if (split[1].equalsIgnoreCase(FinalValues.getSET())) {
                         FinalValues.setSET(split[2]);
@@ -77,6 +79,8 @@ public class SetCommand implements TemplateCommand {
                         FinalValues.setLICHESS(split[2]);
                     } else if (split[1].equalsIgnoreCase(FinalValues.getFOOTBALL())) {
                         FinalValues.setFOOTBALL(split[2]);
+                    } else if (split[1].equalsIgnoreCase(FinalValues.getREMOVE())) {
+                        FinalValues.setREMOVE(split[2]);
                     }
                     event.getChannel().sendMessage(split[1].toUpperCase(Locale.ROOT) + " changed to " + split[2]);
                 } else if (split[1].equalsIgnoreCase(FinalValues.getTIMEOUTCALL())) {

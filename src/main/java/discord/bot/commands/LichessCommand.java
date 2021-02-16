@@ -26,12 +26,16 @@ public class LichessCommand implements TemplateCommand {
                 Gson g = new Gson();
                 JsonObject allInfo = g.fromJson(response.body().string(), JsonObject.class);
                 String username = allInfo.get("username").toString();
+
+
                 JsonObject ratings = allInfo.get("perfs").getAsJsonObject();
+
                 String bulletRating = ratings.get("bullet").getAsJsonObject().get("rating").toString();
                 String puzzleRating = ratings.get("puzzle").getAsJsonObject().get("rating").toString();
                 String rapidRating = ratings.get("rapid").getAsJsonObject().get("rating").toString();
                 String classicalRating = ratings.get("classical").getAsJsonObject().get("rating").toString();
                 String blitzRating = ratings.get("blitz").getAsJsonObject().get("rating").toString();
+
 
                 String bulletGames = ratings.get("bullet").getAsJsonObject().get("games").toString();
                 String puzzleGames = ratings.get("puzzle").getAsJsonObject().get("games").toString();
