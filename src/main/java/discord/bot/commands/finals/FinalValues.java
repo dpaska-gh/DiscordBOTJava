@@ -211,6 +211,24 @@ public class FinalValues {
         FinalValues.FOOTBALL = FOOTBALL;
     }
 
+    public static String getPAUSE() {
+        return PAUSE;
+    }
+
+    public static void setPAUSE(String PAUSE) {
+        FinalValues.PAUSE = PAUSE;
+    }
+
+    public static String getRESUME() {
+        return RESUME;
+    }
+
+    public static void setRESUME(String RESUME) {
+        FinalValues.RESUME = RESUME;
+    }
+
+    public static String RESUME = "resume";
+
     public static String HI = "bok";
 
     public static String PREFIX = "?";
@@ -266,5 +284,7 @@ public class FinalValues {
     public static String NASA = "nasa";
 
     public static String REMOVE = "remove";
+
+    public static String PAUSE = "pause";
 
 }

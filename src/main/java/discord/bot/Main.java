@@ -49,6 +49,8 @@ public class Main {
         commands.put(FinalValues.getPREFIX() + FinalValues.LICHESS, new LichessCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.FOOTBALL, new FootballCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.REMOVE, new RemoveCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.PAUSE, new PauseCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.RESUME, new ResumeCommand());
         return commands;
     }
 
