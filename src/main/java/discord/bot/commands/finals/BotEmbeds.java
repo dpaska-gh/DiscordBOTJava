@@ -1,7 +1,6 @@
 package discord.bot.commands.finals;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import discord.bot.Main;
 import discord.bot.commands.JoinBotCommand;
 import discord.bot.commands.TemplateCommand;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
@@ -29,6 +28,7 @@ public class BotEmbeds {
     public static EmbedBuilder createTFTEmbed(String profileIconId, String placement, String summonerName, String tier, String rank, String leaguePoints, String wins, Float wr, String losses) {
         String version = "10.25.1";
         String extension;
+        EmbedBuilder embed = new EmbedBuilder();
         switch (Integer.parseInt(placement.substring(placement.length() - 1))) {
             case 1:
                 extension = "st";
@@ -43,15 +43,18 @@ public class BotEmbeds {
                 extension = "th";
                 break;
         }
-        //System.out.println("https://ddragon.leagueoflegends.com/cdn/" + version + "/img/profileicon/" + profileIconId);
-        return new EmbedBuilder()
-                .setTitle("**TFT Profile of:** " + summonerName)
+        embed.setTitle("**TFT Profile of:** " + summonerName)
                 .addField("Tier", tier + " " + rank + " - " + leaguePoints + "LP")
                 .addField("Losses", losses)
                 .addField("Wins", wins)
                 .addField("Winrate", wr.toString() + "%")
                 .addField("Last game he played, " + summonerName + " placed", placement + extension)
                 .setThumbnail("https://ddragon.leagueoflegends.com/cdn/" + version + "/img/profileicon/" + profileIconId + ".png");
+
+        if (summonerName.equalsIgnoreCase("TFTLegend007") || summonerName.equalsIgnoreCase("LukaLegend007"))
+            embed.setFooter("Luka was master btw, no joke.");
+
+        return embed;
     }
 
     public static EmbedBuilder musicQueueEmbed(BlockingQueue<AudioTrack> queue) {
@@ -101,7 +104,7 @@ public class BotEmbeds {
     }
 
     public static EmbedBuilder helpEmbed(boolean samohelp, @Nullable String command) {
-        SortedMap<String, TemplateCommand> commands = Main.setCommands();
+        SortedMap<String, TemplateCommand> commands = CommandsMap.setCommands();
         if (samohelp) {
             EmbedBuilder helpEmbed = new EmbedBuilder().setTitle("List of all available commands:")
                     .addField("Current bot timeout: ", FinalValues.TIMEOUT.toString())

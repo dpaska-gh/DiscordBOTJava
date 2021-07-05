@@ -93,7 +93,7 @@ public class TrackScheduler extends AudioEventAdapter {
             //NEMAM POJMA ZAKE TO DELA AL NEJ PEHATI
             isStarted = false;
         }
-
+        JoinBotCommand.PLAYER.setFilterFactory(null);
 
     }
 }

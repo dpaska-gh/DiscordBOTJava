@@ -1,6 +1,6 @@
 package discord.bot.commands;
 
-import discord.bot.Main;
+import discord.bot.commands.finals.CommandsMap;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.event.message.MessageCreateEvent;
 
@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 public class SetCommand implements TemplateCommand {
     @Override
     public void executeCommand(MessageCreateEvent event) {
-        SortedMap<String, TemplateCommand> commands = Main.setCommands();
+        SortedMap<String, TemplateCommand> commands = CommandsMap.setCommands();
 
         if (event.getMessageContent().contains(FinalValues.PREFIX + FinalValues.SET)) {
             Pattern pattern = Pattern.compile("([!-/]|[;-?]|[{-~])");
@@ -49,9 +49,7 @@ public class SetCommand implements TemplateCommand {
                         FinalValues.setCATFACT(split[2]);
                     } else if (split[1].equalsIgnoreCase(FinalValues.getCATIMAGE())) {
                         FinalValues.setCATIMAGE(split[2]);
-                    } /*else if (split[1].equalsIgnoreCase(FinalValues.getRIOTSTATS())) {
-                        FinalValues.setRIOTSTATS(split[2]);
-                    }*/ else if (split[1].equalsIgnoreCase(FinalValues.getDELETE())) {
+                    } else if (split[1].equalsIgnoreCase(FinalValues.getDELETE())) {
                         FinalValues.setDELETE(split[2]);
                     } else if (split[1].equalsIgnoreCase(FinalValues.getHELPCOMMAND())) {
                         FinalValues.setHELPCOMMAND(split[2]);

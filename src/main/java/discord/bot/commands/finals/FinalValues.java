@@ -227,7 +227,27 @@ public class FinalValues {
         FinalValues.RESUME = RESUME;
     }
 
+    public static String getMUSICQUIZ() {
+        return MUSICQUIZ;
+    }
+
+    public static void setMUSICQUIZ(String MUSICQUIZ) {
+        FinalValues.MUSICQUIZ = MUSICQUIZ;
+    }
+
+    public static String getBOOST() {
+        return BOOST;
+    }
+
+    public static void setBOOST(String BOOST) {
+        FinalValues.BOOST = BOOST;
+    }
+
+    public static String BOOST = "bb";
+
     public static String RESUME = "resume";
+
+    public static String MUSICQUIZ = "music-quiz";
 
     public static String HI = "bok";
 

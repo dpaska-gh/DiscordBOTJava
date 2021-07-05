@@ -1,16 +1,17 @@
 package discord.bot;
 
-import discord.bot.commands.*;
-import discord.bot.commands.finals.FinalValues;
+import discord.bot.commands.FifiMudrostiListener;
+import discord.bot.commands.NewMemberListener;
+import discord.bot.commands.TemplateCommand;
+import discord.bot.commands.UserJoinServer;
+import discord.bot.commands.finals.CommandsMap;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.util.logging.FallbackLoggerConfiguration;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.SortedMap;
 import java.util.Timer;
-import java.util.TreeMap;
 
 
 public class Main {
@@ -20,63 +21,27 @@ public class Main {
 
     private static SortedMap<String, TemplateCommand> comm;
 
-    @org.jetbrains.annotations.NotNull
-    public static SortedMap<String, TemplateCommand> setCommands() {
-        //commands.put("!mention", new AtMentionCommand());
-        //NOT WORKING - RIOT TROLLED US!
-        //commands.put(FinalValues.getPREFIX() + FinalValues.RIOTSTATS, new RiotStats());
-        SortedMap<String, TemplateCommand> commands = new TreeMap<>();
-        commands.put(FinalValues.getPREFIX() + FinalValues.CATFACT, new CatFactCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.CATIMAGE, new CatImage());
-        commands.put(FinalValues.getPREFIX() + FinalValues.DELETE, new DeleteMessages());
-        commands.put(FinalValues.getPREFIX() + FinalValues.HELPCOMMAND, new HelpCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.PINGCOMMAND, new PongCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.RANDOMMEME, new RadnomMeme());
-        commands.put(FinalValues.getPREFIX() + FinalValues.SILENCECOMMAND, new SilenceCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.TEMPCHANNEL, new TempChannel());
-        commands.put(FinalValues.getPREFIX() + FinalValues.TFTCOMMAND, new TftCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.TRUMPCOMMAND, new TrumpQuoteCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.PLAY, new JoinBotCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.ODJEBI, new DisconnectCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.VOLUME, new VolumeCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.SKIP, new SkipCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.QUEUE, new QueueCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.SET, new SetCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.HI, new HiCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.CLEAR, new ClearCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.COVID, new CovidCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.NASA, new NasaPlanetCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.LICHESS, new LichessCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.FOOTBALL, new FootballCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.REMOVE, new RemoveCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.PAUSE, new PauseCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.RESUME, new ResumeCommand());
-        return commands;
-    }
-
-    public static SortedMap<String, TemplateCommand> commands() {
-        return Collections.unmodifiableSortedMap(comm);
-    }
-
     public static void main(String[] args) {
 // Enable debug logging
-        FallbackLoggerConfiguration.setDebug(false);
+        FallbackLoggerConfiguration.setDebug(true);
 
 // Enable trace logging
-        FallbackLoggerConfiguration.setTrace(false);
+        FallbackLoggerConfiguration.setTrace(true);
         api.setMessageCacheSize(10, 60 * 60);
-        //temp
+
+        //tft stats based on timer.
         Timer time = new Timer();
         TimedTFT timedTFT = new TimedTFT();
         time.schedule(timedTFT, 0, 3600000);
 
+        //message create event
         api.addMessageCreateListener(event -> {
             try {
                 if (event.getMessage().getUserAuthor().isPresent())
                     if (!event.getMessage().getUserAuthor().get().isBot()) {
                         String message = event.getMessageContent().toLowerCase();
                         String[] split = message.split(" ");
-                        comm = setCommands();
+                        comm = CommandsMap.setCommands();
                         comm.get(split[0]).executeCommand(event);
                     }
             } catch (NullPointerException | IOException | InterruptedException ignored) {
@@ -84,7 +49,6 @@ public class Main {
             }
             FifiMudrostiListener.executeFifiMudrosti(event);
         });
-
         UserJoinServer.executeCommand();
         NewMemberListener.executeCommand();
     }

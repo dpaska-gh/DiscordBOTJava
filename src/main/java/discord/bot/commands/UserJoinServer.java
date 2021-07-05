@@ -12,7 +12,11 @@ public class UserJoinServer {
             if (!user.isBot()) {
                 if (event.getServer().getSystemChannel().isPresent()) {
                     ServerTextChannel channel = event.getServer().getSystemChannel().get();
-                    channel.sendMessage("Boooooooooooooooook " + user.getMentionTag() + "!");
+                    if (user.getId() == 188951318566535168L) {
+                        channel.sendMessage(user.getMentionTag() + " je dosel, njemu necu bok reci.");
+                    } else {
+                        channel.sendMessage("Boooooooooooooooook " + user.getMentionTag() + "!");
+                    }
                 }
 
             }

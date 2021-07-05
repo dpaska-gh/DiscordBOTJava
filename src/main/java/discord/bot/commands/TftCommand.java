@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -88,13 +87,13 @@ public class TftCommand implements TemplateCommand {
             JsonElement winsElement = null;
 
             try {
-                winsElement = array.get(0);
+                winsElement = array.get(1);
             } catch (IndexOutOfBoundsException outOfBoundsException) {
                 textChannel.sendMessage("Player **" + s + "** didn't play TFT for a long time");
             }
             // JsonElement winsElement = array.get(0);
             JsonObject wins = winsElement.getAsJsonObject();
-
+            System.out.println(wins);
             //this url opens the last match the player played
             URL puuidmatches = new URL("https://europe.api.riotgames.com/tft/match/v1/matches/by-puuid/" + puuid.toString().replace("\"", "") + "/ids?count=1&api_key=" + ApiKey.riotApiKey);
             URLConnection puuidMatches = puuidmatches.openConnection();
@@ -115,7 +114,6 @@ public class TftCommand implements TemplateCommand {
             JsonObject infoObject = info.getAsJsonObject("info");
             JsonArray participants = infoObject.getAsJsonArray("participants");
             //System.out.println(participants.toString());
-
             //atomic because you cant use normal object in foreach (just a json object but ATOMIC)
             AtomicReference<JsonObject> a = new AtomicReference<>();
 
@@ -124,8 +122,8 @@ public class TftCommand implements TemplateCommand {
                 if (elements.getAsJsonObject().get("puuid").toString().equals(puuid.toString())) {
                     a.getAndSet(elements.getAsJsonObject());
                 }
-                //System.out.println(elements.getAsJsonObject().get("puuid").getAsString());
             });
+            //System.out.println(a.get());
 
             //get jsonobject from atomic jsonobject
             JsonObject aObject = a.get();
@@ -142,10 +140,9 @@ public class TftCommand implements TemplateCommand {
             String placement = aObject.get("placement").getAsString();
             String profileIconIds = profileIconId.toString();
             Float winRate = (Float.parseFloat(w) * 100) / ((Float.parseFloat(l)) + Float.parseFloat(w));
-            //System.out.println(profileIconIds);
 
             EmbedBuilder tftEmbed = BotEmbeds.createTFTEmbed(profileIconIds, placement, sN, tier, rank, LP, w, winRate, l);
-
+/*
             String[] dpaskaAccs = {"BogTFTa", "UIMastered Goku", "AsianGamer5", "Milan Stanković", "PeroMain"};
             String[] mimiAccs = {"MiqeloS"};
             if (Arrays.asList(mimiAccs).contains(sN)) {
@@ -154,10 +151,11 @@ public class TftCommand implements TemplateCommand {
             if (Arrays.asList(dpaskaAccs).contains(sN)) {
                 tftEmbed.setThumbnail("https://i.imgur.com/ttzI0kL.jpg");
             }
-
+*/
             textChannel.sendMessage(tftEmbed);
 
         } catch (IOException e) {
+            //e.printStackTrace();
             textChannel.sendMessage("Player not found");
         }
     }
