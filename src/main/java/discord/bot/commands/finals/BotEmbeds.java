@@ -1,12 +1,14 @@
 package discord.bot.commands.finals;
 
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import discord.bot.Main;
 import discord.bot.commands.JoinBotCommand;
 import discord.bot.commands.TemplateCommand;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.msgpack.core.annotations.Nullable;
 
+import java.awt.*;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.concurrent.BlockingQueue;
@@ -26,6 +28,7 @@ public class BotEmbeds {
     public static EmbedBuilder createTFTEmbed(String profileIconId, String placement, String summonerName, String tier, String rank, String leaguePoints, String wins, Float wr, String losses) {
         String version = "10.25.1";
         String extension;
+        EmbedBuilder embed = new EmbedBuilder();
         switch (Integer.parseInt(placement.substring(placement.length() - 1))) {
             case 1:
                 extension = "st";
@@ -40,15 +43,18 @@ public class BotEmbeds {
                 extension = "th";
                 break;
         }
-        //System.out.println("https://ddragon.leagueoflegends.com/cdn/" + version + "/img/profileicon/" + profileIconId);
-        return new EmbedBuilder()
-                .setTitle("**TFT Profile of:** " + summonerName)
+        embed.setTitle("**TFT Profile of:** " + summonerName)
                 .addField("Tier", tier + " " + rank + " - " + leaguePoints + "LP")
                 .addField("Losses", losses)
                 .addField("Wins", wins)
                 .addField("Winrate", wr.toString() + "%")
                 .addField("Last game he played, " + summonerName + " placed", placement + extension)
                 .setThumbnail("https://ddragon.leagueoflegends.com/cdn/" + version + "/img/profileicon/" + profileIconId + ".png");
+
+        if (summonerName.equalsIgnoreCase("TFTLegend007") || summonerName.equalsIgnoreCase("LukaLegend007"))
+            embed.setFooter("Luka was master btw, no joke.");
+
+        return embed;
     }
 
     public static EmbedBuilder musicQueueEmbed(BlockingQueue<AudioTrack> queue) {
@@ -98,7 +104,7 @@ public class BotEmbeds {
     }
 
     public static EmbedBuilder helpEmbed(boolean samohelp, @Nullable String command) {
-        SortedMap<String, TemplateCommand> commands = Main.setCommands();
+        SortedMap<String, TemplateCommand> commands = CommandsMap.setCommands();
         if (samohelp) {
             EmbedBuilder helpEmbed = new EmbedBuilder().setTitle("List of all available commands:")
                     .addField("Current bot timeout: ", FinalValues.TIMEOUT.toString())
@@ -128,6 +134,63 @@ public class BotEmbeds {
 
         }
 
+    }
+
+    public static EmbedBuilder lichessEmbed(String username,
+                                            String bulletRating,
+                                            String puzzleRating,
+                                            String rapidRating,
+                                            String classicalRating,
+                                            String blitzRating,
+                                            String bulletGames,
+                                            String puzzleGames,
+                                            String rapidGames,
+                                            String classicalGames,
+                                            String blitzGames,
+                                            Boolean onlineStatus,
+                                            boolean bulletProv,
+                                            boolean puzzleProv,
+                                            boolean rapidProv,
+                                            boolean classicalProv,
+                                            boolean blitzProv,
+                                            String timePlayed,
+                                            Long lastSeen) {
+
+        EmbedBuilder lichessEmbed = new EmbedBuilder().setTitle("Lichess.org stats for user: " + username).setThumbnail("https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Lichess_Logo.svg/250px-Lichess_Logo.svg.png");
+        if (bulletProv)
+            lichessEmbed.addField("BULLET rating over " + bulletGames + " games.", bulletRating + "?");
+        else
+            lichessEmbed.addField("BULLET rating over " + bulletGames + " games.", bulletRating);
+        if (puzzleProv)
+            lichessEmbed.addField("PUZZLE rating over " + puzzleGames + " games.", puzzleRating + "?");
+        else
+            lichessEmbed.addField("PUZZLE rating over " + puzzleGames + " games.", puzzleRating);
+        if (rapidProv)
+            lichessEmbed.addField("RAPID rating over " + rapidGames + " games.", rapidRating + "?");
+        else
+            lichessEmbed.addField("RAPID rating over " + rapidGames + " games.", rapidRating);
+        if (classicalProv)
+            lichessEmbed.addField("CLASSICAL rating over " + classicalGames + " games.", classicalRating + "?");
+        else
+            lichessEmbed.addField("CLASSICAL rating over " + classicalGames + " games.", classicalRating);
+        if (blitzProv)
+            lichessEmbed.addField("BLITZ rating over " + blitzGames + " games.", blitzRating + "?");
+        else
+            lichessEmbed.addField("BLITZ rating over " + blitzGames + " games.", blitzRating);
+
+        lichessEmbed.setDescription("**Total time played:** " + timePlayed);
+
+        if (onlineStatus) {
+            lichessEmbed.setFooter("User is currently ONLINE");
+        } else {
+            Date lastSeenDate = new Date(lastSeen);
+            var dateToStr = DateFormat.getDateTimeInstance().format(lastSeenDate);
+            lichessEmbed.setFooter("Last seen on: " + dateToStr);
+        }
+
+        lichessEmbed.setColor(Color.LIGHT_GRAY);
+
+        return lichessEmbed;
     }
 
 }

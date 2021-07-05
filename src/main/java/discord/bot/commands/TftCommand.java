@@ -7,6 +7,7 @@ import com.google.gson.JsonParser;
 import discord.bot.ApiKey;
 import discord.bot.commands.finals.BotEmbeds;
 import discord.bot.commands.finals.FinalValues;
+import org.javacord.api.entity.channel.ServerTextChannel;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.javacord.api.event.message.MessageCreateEvent;
 
@@ -25,12 +26,13 @@ public class TftCommand implements TemplateCommand {
     public void executeCommand(MessageCreateEvent event) {
 
         String message = event.getMessageContent();
+        ServerTextChannel textChannel = event.getServerTextChannel().get();
         String[] split = message.split(" ");
         if (split[0].equalsIgnoreCase(FinalValues.PREFIX + FinalValues.TFTCOMMAND)) {
             if (split[1].equalsIgnoreCase("gentlmens"))
-                getGentlemens(event);
+                getGentlemens(textChannel);
             else
-                printData(event, message.replace(FinalValues.PREFIX + FinalValues.TFTCOMMAND + " ", "").trim());
+                printData(textChannel, message.replace(FinalValues.PREFIX + FinalValues.TFTCOMMAND + " ", "").trim());
         }
     }
 
@@ -44,18 +46,18 @@ public class TftCommand implements TemplateCommand {
         return Collections.singletonList("Gets the TFT stats for user.");
     }
 
-    public static void getGentlemens(MessageCreateEvent event) {
-        printData(event, "LukaLegend007");
-        printData(event, "MiqeloS");
-        printData(event, "BogTFTa");
-        printData(event, "sar der rot");
+    public static void getGentlemens(ServerTextChannel textChannel) {
+        printData(textChannel, "LukaLegend007");
+        printData(textChannel, "MiqeloS");
+        printData(textChannel, "BogTFTa");
+        printData(textChannel, "sar der rot");
     }
 
     /**
-     * @param event Event event equals to the event the listener is setup for (here, MessageCreate)
-     * @param s     String s equals to the summoner name of the user we are searching for.
+     * @param textChannel Event event equals to the text channel the event is triggered in
+     * @param s           String s equals to the summoner name of the user we are searching for.
      */
-    private static void printData(MessageCreateEvent event, String s) {
+    public static void printData(ServerTextChannel textChannel, String s) {
         try {
             if (s.split(" ").length > 1) {
                 s = String.join("%20", s.split(" "));
@@ -82,9 +84,16 @@ public class TftCommand implements TemplateCommand {
             URLConnection request = url.openConnection();
             BufferedReader inputStream = new BufferedReader(new InputStreamReader(request.getInputStream()));
             JsonArray array = JsonParser.parseReader(inputStream).getAsJsonArray();
-            JsonElement winsElement = array.get(0);
-            JsonObject wins = winsElement.getAsJsonObject();
+            JsonElement winsElement = null;
 
+            try {
+                winsElement = array.get(1);
+            } catch (IndexOutOfBoundsException outOfBoundsException) {
+                textChannel.sendMessage("Player **" + s + "** didn't play TFT for a long time");
+            }
+            // JsonElement winsElement = array.get(0);
+            JsonObject wins = winsElement.getAsJsonObject();
+            System.out.println(wins);
             //this url opens the last match the player played
             URL puuidmatches = new URL("https://europe.api.riotgames.com/tft/match/v1/matches/by-puuid/" + puuid.toString().replace("\"", "") + "/ids?count=1&api_key=" + ApiKey.riotApiKey);
             URLConnection puuidMatches = puuidmatches.openConnection();
@@ -105,7 +114,6 @@ public class TftCommand implements TemplateCommand {
             JsonObject infoObject = info.getAsJsonObject("info");
             JsonArray participants = infoObject.getAsJsonArray("participants");
             //System.out.println(participants.toString());
-
             //atomic because you cant use normal object in foreach (just a json object but ATOMIC)
             AtomicReference<JsonObject> a = new AtomicReference<>();
 
@@ -114,8 +122,8 @@ public class TftCommand implements TemplateCommand {
                 if (elements.getAsJsonObject().get("puuid").toString().equals(puuid.toString())) {
                     a.getAndSet(elements.getAsJsonObject());
                 }
-                //System.out.println(elements.getAsJsonObject().get("puuid").getAsString());
             });
+            //System.out.println(a.get());
 
             //get jsonobject from atomic jsonobject
             JsonObject aObject = a.get();
@@ -132,19 +140,23 @@ public class TftCommand implements TemplateCommand {
             String placement = aObject.get("placement").getAsString();
             String profileIconIds = profileIconId.toString();
             Float winRate = (Float.parseFloat(w) * 100) / ((Float.parseFloat(l)) + Float.parseFloat(w));
-            //System.out.println(profileIconIds);
-            /*
-            String sb = wins.get("summonerName").getAsString() + "\n" +
-                    wins.get("tier").getAsString() + "   " + wins.get("rank").getAsString() + "   " + wins.get("leaguePoints").getAsString() + "lp\n" +
-                    wins.get("wins").getAsString() + " wins " +
-                    Float.parseFloat(wins.get("wins").getAsString()) * 100 / (Float.parseFloat(wins.get("losses").getAsString()) + Float.parseFloat(wins.get("wins").getAsString())) + "% winrate\n";
-             */
 
             EmbedBuilder tftEmbed = BotEmbeds.createTFTEmbed(profileIconIds, placement, sN, tier, rank, LP, w, winRate, l);
-            event.getChannel().sendMessage(tftEmbed);
+/*
+            String[] dpaskaAccs = {"BogTFTa", "UIMastered Goku", "AsianGamer5", "Milan Stanković", "PeroMain"};
+            String[] mimiAccs = {"MiqeloS"};
+            if (Arrays.asList(mimiAccs).contains(sN)) {
+                tftEmbed.setThumbnail("https://i.imgur.com/y6Mne1I.jpg");
+            }
+            if (Arrays.asList(dpaskaAccs).contains(sN)) {
+                tftEmbed.setThumbnail("https://i.imgur.com/ttzI0kL.jpg");
+            }
+*/
+            textChannel.sendMessage(tftEmbed);
 
         } catch (IOException e) {
-            event.getChannel().sendMessage("Player not found");
+            //e.printStackTrace();
+            textChannel.sendMessage("Player not found");
         }
     }
 

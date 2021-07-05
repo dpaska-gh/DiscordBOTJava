@@ -89,9 +89,11 @@ public class TrackScheduler extends AudioEventAdapter {
         } else if (endReason.mayStartNext) {
             nextTrack();
             System.out.println(isStarted);
+
+            //NEMAM POJMA ZAKE TO DELA AL NEJ PEHATI
             isStarted = false;
         }
-
+        JoinBotCommand.PLAYER.setFilterFactory(null);
 
     }
 }

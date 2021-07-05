@@ -73,7 +73,7 @@ public class FinalValues {
     public static void setCATIMAGE(String CATIMAGE) {
         FinalValues.CATIMAGE = CATIMAGE;
     }
-
+/*
     public static String getRIOTSTATS() {
         return RIOTSTATS;
     }
@@ -81,6 +81,7 @@ public class FinalValues {
     public static void setRIOTSTATS(String RIOTSTATS) {
         FinalValues.RIOTSTATS = RIOTSTATS;
     }
+*/
 
     public static String getDELETE() {
         return DELETE;
@@ -186,9 +187,75 @@ public class FinalValues {
         FinalValues.NASA = NASA;
     }
 
+    public static String getREMOVE() {
+        return REMOVE;
+    }
+
+    public static void setREMOVE(String REMOVE) {
+        FinalValues.REMOVE = REMOVE;
+    }
+
+    public static String getLICHESS() {
+        return LICHESS;
+    }
+
+    public static void setLICHESS(String LICHESS) {
+        FinalValues.LICHESS = LICHESS;
+    }
+
+    public static String getFOOTBALL() {
+        return FOOTBALL;
+    }
+
+    public static void setFOOTBALL(String FOOTBALL) {
+        FinalValues.FOOTBALL = FOOTBALL;
+    }
+
+    public static String getPAUSE() {
+        return PAUSE;
+    }
+
+    public static void setPAUSE(String PAUSE) {
+        FinalValues.PAUSE = PAUSE;
+    }
+
+    public static String getRESUME() {
+        return RESUME;
+    }
+
+    public static void setRESUME(String RESUME) {
+        FinalValues.RESUME = RESUME;
+    }
+
+    public static String getMUSICQUIZ() {
+        return MUSICQUIZ;
+    }
+
+    public static void setMUSICQUIZ(String MUSICQUIZ) {
+        FinalValues.MUSICQUIZ = MUSICQUIZ;
+    }
+
+    public static String getBOOST() {
+        return BOOST;
+    }
+
+    public static void setBOOST(String BOOST) {
+        FinalValues.BOOST = BOOST;
+    }
+
+    public static String BOOST = "bb";
+
+    public static String RESUME = "resume";
+
+    public static String MUSICQUIZ = "music-quiz";
+
     public static String HI = "bok";
 
-    public static String PREFIX = "!";
+    public static String PREFIX = "?";
+
+    public static String LICHESS = "lichess";
+
+    public static String FOOTBALL = "football";
 
     public static String SET = "set";
 
@@ -235,5 +302,9 @@ public class FinalValues {
     public static String TIMEOUTCALL = "timeout";
 
     public static String NASA = "nasa";
+
+    public static String REMOVE = "remove";
+
+    public static String PAUSE = "pause";
 
 }
