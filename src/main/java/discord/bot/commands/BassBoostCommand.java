@@ -1,6 +1,7 @@
 package discord.bot.commands;
 
 import com.sedmelluq.discord.lavaplayer.filter.equalizer.EqualizerFactory;
+import discord.bot.Main;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.event.message.MessageCreateEvent;
 
@@ -20,18 +21,20 @@ public class BassBoostCommand implements TemplateCommand {
 
     @Override
     public void executeCommand(MessageCreateEvent event) throws IOException, InterruptedException {
-        if (event.getMessageContent().equals(FinalValues.PREFIX + FinalValues.BOOST) && boosted) {
+        if (event.getMessageContent().equals(FinalValues.PREFIX + FinalValues.BOOST) && boosted && event.getMessageAuthor().getConnectedVoiceChannel().isPresent() && Main.api.getYourself().isConnected(event.getMessageAuthor().getConnectedVoiceChannel().get())) {
+
             eqStop();
             boosted = false;
             event.getServerTextChannel().get().sendMessage("Stopped boosting.");
-        } else if (event.getMessageContent().equals(FinalValues.PREFIX + FinalValues.BOOST) && !boosted) {
+        } else if (event.getMessageContent().equals(FinalValues.PREFIX + FinalValues.BOOST) && !boosted && event.getMessageAuthor().getConnectedVoiceChannel().isPresent() && Main.api.getYourself().isConnected(event.getMessageAuthor().getConnectedVoiceChannel().get())) {
             eqhighbass(0.1f);
             eqSetup();
             eqStart();
             eqhighbass(0.1f);
             boosted = true;
             event.getServerTextChannel().get().sendMessage("Boosted.");
-        }
+        } else
+            event.getChannel().sendMessage("You and the bot have to be connected to a channel.");
     }
 
     private void eqSetup() {

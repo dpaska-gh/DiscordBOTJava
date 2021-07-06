@@ -87,7 +87,7 @@ public class TftCommand implements TemplateCommand {
             JsonElement winsElement = null;
 
             try {
-                winsElement = array.get(1);
+                winsElement = array.get(0);
             } catch (IndexOutOfBoundsException outOfBoundsException) {
                 textChannel.sendMessage("Player **" + s + "** didn't play TFT for a long time");
             }
