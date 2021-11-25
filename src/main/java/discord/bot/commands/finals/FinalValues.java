@@ -199,6 +199,14 @@ public class FinalValues {
         return LICHESS;
     }
 
+    public static String getFACTOR() {
+        return FACTOR;
+    }
+
+    public static void setFACTOR(String FACTOR) {
+        FinalValues.FACTOR = FACTOR;
+    }
+
     public static void setLICHESS(String LICHESS) {
         FinalValues.LICHESS = LICHESS;
     }
@@ -254,6 +262,8 @@ public class FinalValues {
     public static String PREFIX = "?";
 
     public static String LICHESS = "lichess";
+
+    public static String FACTOR = "factor";
 
     public static String FOOTBALL = "football";
 

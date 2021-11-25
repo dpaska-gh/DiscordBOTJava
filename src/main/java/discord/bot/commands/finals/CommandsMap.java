@@ -1,6 +1,15 @@
 package discord.bot.commands.finals;
 
-import discord.bot.commands.*;
+import discord.bot.commands.HelpCommand;
+import discord.bot.commands.TemplateCommand;
+import discord.bot.commands.admin.SetCommand;
+import discord.bot.commands.admin.SilenceCommand;
+import discord.bot.commands.admin.TempChannel;
+import discord.bot.commands.apis.*;
+import discord.bot.commands.messages.DeleteMessages;
+import discord.bot.commands.messages.HiCommand;
+import discord.bot.commands.messages.PongCommand;
+import discord.bot.commands.music.*;
 import discord.bot.commands.musicquiz.MusicQuizCall;
 
 import java.util.SortedMap;
@@ -41,6 +50,7 @@ public class CommandsMap {
         commands.put(FinalValues.getPREFIX() + FinalValues.RESUME, new ResumeCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.MUSICQUIZ, new MusicQuizCall());
         commands.put(FinalValues.getPREFIX() + FinalValues.BOOST, new BassBoostCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.FACTOR, new FactorCommand());
 
         return commands;
     }

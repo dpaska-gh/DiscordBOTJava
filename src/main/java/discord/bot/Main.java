@@ -1,10 +1,10 @@
 package discord.bot;
 
-import discord.bot.commands.FifiMudrostiListener;
-import discord.bot.commands.NewMemberListener;
 import discord.bot.commands.TemplateCommand;
-import discord.bot.commands.UserJoinServer;
 import discord.bot.commands.finals.CommandsMap;
+import discord.bot.commands.listeners.FifiMudrostiListener;
+import discord.bot.commands.listeners.NewMemberListener;
+import discord.bot.commands.listeners.UserJoinServerListener;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.util.logging.FallbackLoggerConfiguration;
@@ -49,7 +49,7 @@ public class Main {
             }
             FifiMudrostiListener.executeFifiMudrosti(event);
         });
-        UserJoinServer.executeCommand();
+        UserJoinServerListener.executeCommand();
         NewMemberListener.executeCommand();
     }
 

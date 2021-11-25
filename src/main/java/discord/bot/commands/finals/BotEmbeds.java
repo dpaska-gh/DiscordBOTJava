@@ -1,8 +1,10 @@
 package discord.bot.commands.finals;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import discord.bot.commands.JoinBotCommand;
 import discord.bot.commands.TemplateCommand;
+import discord.bot.commands.music.JoinBotCommand;
 import org.javacord.api.entity.message.embed.EmbedBuilder;
 import org.msgpack.core.annotations.Nullable;
 
@@ -23,6 +25,12 @@ public class BotEmbeds {
                 .setThumbnail("https://img.youtube.com/vi/" + track.getInfo().identifier + "/0.jpg")
                 .addField("URL", track.getInfo().uri)
                 .setFooter("Requested by: " + JoinBotCommand.user.getName());
+    }
+
+    public static EmbedBuilder factorEmbed(JsonObject info) {
+        JsonArray factors = info.getAsJsonArray("factors");
+        return new EmbedBuilder()
+                .setTitle("Showing factors of number: " + info.get("id").getAsString().replace("\"", ""));
     }
 
     public static EmbedBuilder createTFTEmbed(String profileIconId, String placement, String summonerName, String tier, String rank, String leaguePoints, String wins, Float wr, String losses) {
@@ -66,7 +74,7 @@ public class BotEmbeds {
         stringBuilder.append(String.format(("**Now playing: %s** \n"), JoinBotCommand.PLAYER.getPlayingTrack().getInfo().title));
         queue.forEach(elements -> {
             i.getAndIncrement();
-            stringBuilder.append(String.format("**%s.** %s \n", i.toString(), elements.getInfo().title));
+            stringBuilder.append(String.format("**%s.** %s \n", i, elements.getInfo().title));
         });
 
         return embedBuilder.setTitle("Current music queue: ")
