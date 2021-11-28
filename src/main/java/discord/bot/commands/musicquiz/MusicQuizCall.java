@@ -10,12 +10,12 @@ import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import discord.bot.LavaplayerAudioSource;
 import discord.bot.Main;
-import discord.bot.commands.JoinBotCommand;
 import discord.bot.commands.TemplateCommand;
-import discord.bot.commands.TrackScheduler;
 import discord.bot.commands.finals.FinalValues;
+import discord.bot.commands.music.JoinBotCommand;
+import discord.bot.commands.music.LavaplayerAudioSource;
+import discord.bot.commands.music.TrackScheduler;
 import org.javacord.api.audio.AudioConnection;
 import org.javacord.api.audio.AudioSource;
 import org.javacord.api.entity.channel.ServerVoiceChannel;

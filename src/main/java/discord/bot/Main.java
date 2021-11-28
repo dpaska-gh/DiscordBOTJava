@@ -49,6 +49,7 @@ public class Main {
             }
             FifiMudrostiListener.executeFifiMudrosti(event);
         });
+
         UserJoinServerListener.executeCommand();
         NewMemberListener.executeCommand();
     }

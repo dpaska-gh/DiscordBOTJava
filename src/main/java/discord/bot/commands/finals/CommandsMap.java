@@ -50,7 +50,7 @@ public class CommandsMap {
         commands.put(FinalValues.getPREFIX() + FinalValues.RESUME, new ResumeCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.MUSICQUIZ, new MusicQuizCall());
         commands.put(FinalValues.getPREFIX() + FinalValues.BOOST, new BassBoostCommand());
-        commands.put(FinalValues.getPREFIX() + FinalValues.FACTOR, new FactorCommand());
+        //commands.put(FinalValues.getPREFIX() + FinalValues.FACTOR, new FactorCommand());
 
         return commands;
     }
