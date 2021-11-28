@@ -23,9 +23,6 @@ public class HelpCommand implements TemplateCommand {
             event.getChannel().sendMessage(new EmbedBuilder().setTitle("Help command").setDescription("Invalid ammount of arguments"));
         }
 
-
-        //event.getChannel().sendMessage(sb.toString());
-
     }
 
     @Override
