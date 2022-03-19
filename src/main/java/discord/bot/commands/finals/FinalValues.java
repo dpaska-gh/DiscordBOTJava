@@ -247,9 +247,19 @@ public class FinalValues {
         return BOOST;
     }
 
+    public static String getWOOP() {
+        return WOOP;
+    }
+
+    public static void setWOOP(String WOOP) {
+        FinalValues.WOOP = WOOP;
+    }
+
     public static void setBOOST(String BOOST) {
         FinalValues.BOOST = BOOST;
     }
+
+    public static String WOOP = "woop";
 
     public static String BOOST = "bb";
 

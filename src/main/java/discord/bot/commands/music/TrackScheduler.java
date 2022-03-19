@@ -5,6 +5,7 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import discord.bot.Main;
+import discord.bot.commands.WoopCommand;
 import discord.bot.commands.finals.BotEmbeds;
 import discord.bot.commands.finals.FinalValues;
 import org.javacord.api.util.concurrent.ThreadPool;
@@ -65,6 +66,8 @@ public class TrackScheduler extends AudioEventAdapter {
 
         if (queue.size() == 0) {
             try {
+
+                WoopCommand.audioConnection.close();
                 isStarted = false;
                 System.out.println(isStarted);
                 ThreadPool threadPool = Main.api.getThreadPool();

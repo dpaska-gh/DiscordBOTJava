@@ -1,5 +1,7 @@
 plugins {
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
     id 'java'
+    id 'application'
 }
 
 group 'discord.bot'
@@ -30,5 +32,28 @@ dependencies {
 
 }
 
+mainClassName = "discord.bot.Main"
+
+task copyToLib(type: Copy) {
+    into "$buildDir/libs"
+    from(configurations.compile)
+}
+
 task stage(dependsOn: ['build', 'clean'])
+stage.dependsOn(copyToLib)
 build.mustRunAfter clean
+
+shadowJar {
+    manifest{
+        attributes 'Main-Class': mainClassName
+    }
+    archiveBaseName.set('bot')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
+
+task runApp(type: JavaExec) {
+    main = "discord.bot.Main.Class"
+}
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11

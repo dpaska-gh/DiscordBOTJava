@@ -84,6 +84,8 @@ public class SetCommand implements TemplateCommand {
                         FinalValues.setPAUSE(split[2]);
                     } else if (split[1].equalsIgnoreCase(FinalValues.getRESUME())) {
                         FinalValues.setRESUME(split[2]);
+                    } else if (split[1].equalsIgnoreCase(FinalValues.getWOOP())){
+                        FinalValues.setWOOP(split[2]);
                     }
                     event.getChannel().sendMessage(split[1].toUpperCase(Locale.ROOT) + " changed to " + split[2]);
                 } else if (split[1].equalsIgnoreCase(FinalValues.getTIMEOUTCALL())) {

@@ -2,6 +2,7 @@ package discord.bot.commands.finals;
 
 import discord.bot.commands.HelpCommand;
 import discord.bot.commands.TemplateCommand;
+import discord.bot.commands.WoopCommand;
 import discord.bot.commands.admin.SetCommand;
 import discord.bot.commands.admin.SilenceCommand;
 import discord.bot.commands.admin.TempChannel;
@@ -23,7 +24,9 @@ public class CommandsMap {
      */
     public static SortedMap<String, TemplateCommand> setCommands() {
         SortedMap<String, TemplateCommand> commands = new TreeMap<>();
+
         commands.put(FinalValues.getPREFIX() + FinalValues.CATFACT, new CatFactCommand());
+        commands.put(FinalValues.getPREFIX() + FinalValues.WOOP, new WoopCommand());
         commands.put(FinalValues.getPREFIX() + FinalValues.CATIMAGE, new CatImage());
         commands.put(FinalValues.getPREFIX() + FinalValues.DELETE, new DeleteMessages());
         commands.put(FinalValues.getPREFIX() + FinalValues.HELPCOMMAND, new HelpCommand());
